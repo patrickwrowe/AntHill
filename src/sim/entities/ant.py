@@ -6,16 +6,18 @@ from src.sim.datatypes import entities
 
 @attrs.define
 class Ant(entities.Entity):
-    pheromones: AntPheremones
+    pheremones: AntPheremones
 
     @classmethod
-    def basic_ant(cls):
+    def basic_ant(cls) -> Ant:
         """Creates yer regular old basic ant"""
         pheremones = AntPheremones(location_pheremone=1)
 
         # Lets just put the ants in the middle of the screen for now.
         init_pos = entities.EntityPos(sconf.sim_x/2, 
                                       sconf.sim_y/2)
+
+        return cls(pos = init_pos, pheremones = pheremones)
 
 @attrs.define
 class AntPheremones:
