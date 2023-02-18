@@ -49,9 +49,9 @@ class AntHill:
                     )
 
             # Update game state
-            self.simulation.update_sim()
+            entities = self.simulation.update_sim()
 
-            draw.draw_frame(self.pg_setup.screen)
+            draw.draw_frame(self.pg_setup.screen, entities)
 
             # Control the frame rate
             self.pg_setup.clock.tick(60)

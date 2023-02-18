@@ -6,7 +6,7 @@ from src.config.sim_conf import sconf
 from src.sim.datatypes import entities, items
 from src.sim.entities import ant
 from src.sim.items import food
-
+from src.sim.rules import stochastic
 
 @attrs.define
 class AntHillSim:
@@ -21,7 +21,7 @@ class AntHillSim:
         """Initialise a new simulation"""
         raise NotImplementedError()
 
-    def update_sim(self):
+    def update_sim(self) -> List[entities.Entity]:
         """Update the simulation"""
         raise NotImplementedError()
 
@@ -47,5 +47,9 @@ class BasicAntHillSim(AntHillSim):
         return cls(sim_entities=sim_entities, sim_items=sim_items)
 
     def update_sim(self):
+        """Update the simulation"""
+
         self.num_updates += 1
-        print(self.num_updates)
+        stochastic.random_move(self.sim_entities)
+
+        return self.sim_entities
