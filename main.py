@@ -2,7 +2,8 @@ import attrs
 import pygame
 import sys
 
-from src import setup, events, draw, shutdown
+from src.interface import events, draw
+from src import setup, shutdown
 
 @attrs.define
 class AntHill:
