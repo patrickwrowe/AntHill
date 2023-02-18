@@ -3,8 +3,6 @@ import pygame
 import sys
 import os
 
-from typing import Any
-
 from src.config.global_conf import gconf
 
 @attrs.define

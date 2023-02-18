@@ -36,7 +36,7 @@ class BasicAntHillSim(AntHillSim):
         # Initialise some ants.
         sim_entities.extend([ant.Ant.basic_ant() for i in range(sconf.init_num_basic_ants)])
         # Initialise some food
-        sim_items.extend([food.AntFood.basic_food() for i in range(sconf.init_num_basic_food)])
+        sim_items.extend([food.BasicAntFood.new_food() for i in range(sconf.init_num_basic_food)])
 
         return cls(sim_entities = sim_entities, sim_items = sim_items)
 

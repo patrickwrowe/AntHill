@@ -1,10 +1,7 @@
 import attrs
-import pygame
-import sys
 
 from src.interface import events, draw
 from src import setup, shutdown
-from src.config.global_conf import gconf
 from src.sim import sim
 
 @attrs.define
@@ -24,7 +21,10 @@ class AntHill:
         event_handler = events.EventHandler()
         simulation = sim.BasicAntHillSim.new_sim()
 
-        return cls(system_setup, pg_setup, event_handler, simulation)
+        return cls(system_setup = system_setup, 
+                   pg_setup = pg_setup, 
+                   event_handler = event_handler, 
+                   simulation = simulation)
 
     def run_anthill(self):
 
