@@ -4,9 +4,9 @@ from src.interface import events, draw
 from src import setup, shutdown
 from src.sim import sim
 
+
 @attrs.define
 class AntHill:
-
     system_setup: setup.SystemSetup
     pg_setup: setup.PGSetup
     event_handler: events.EventHandler
@@ -21,17 +21,17 @@ class AntHill:
         event_handler = events.EventHandler()
         simulation = sim.BasicAntHillSim.new_sim()
 
-        return cls(system_setup = system_setup, 
-                   pg_setup = pg_setup, 
-                   event_handler = event_handler, 
-                   simulation = simulation)
+        return cls(
+            system_setup=system_setup,
+            pg_setup=pg_setup,
+            event_handler=event_handler,
+            simulation=simulation,
+        )
 
     def run_anthill(self):
-
         # Main loop
         running = True
         while running:
-            
             # Get a tuple of AntHillEvents to begin the loop
             # These deal exclusively with user input
             ah_events = self.event_handler.handle_events()
@@ -43,7 +43,10 @@ class AntHill:
                 if isinstance(event, events.CloseEvent):
                     running = False
                 elif isinstance(event, events.MouseClickEvent):
-                    print(f"mouse clicked at {event.click_location[0]}, {event.click_location[1]}")
+                    print(
+                        f"mouse clicked at {event.click_location[0]}, \
+                          {event.click_location[1]}"
+                    )
 
             # Update game state
             self.simulation.update_sim()
@@ -56,7 +59,7 @@ class AntHill:
         # Quit Pygame
         shutdown.exit_anthill()
 
+
 if __name__ == "__main__":
-    
     anthill = AntHill.setup_anthill()
     anthill.run_anthill()

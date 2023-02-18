@@ -4,12 +4,14 @@ import attrs
 
 from src.sim.datatypes import SimPos
 
+
 @attrs.define
 class Item:
     """Base class for non-sentient
     collectible items in the sim."""
-    
+
     pos: SimPos
+
 
 @attrs.define
 class Consumable(Item):
@@ -24,7 +26,7 @@ class Consumable(Item):
         if self.supply == 0.0:
             return 0.0
         # If there's only a small amount left,
-        # Withdraw what can be withdrawn
+        # Withdraw what can be withdrawn
         elif quant > self.supply:
             residal = self.supply
             self.supply = 0.0
@@ -33,7 +35,6 @@ class Consumable(Item):
         else:
             self.supply -= quant
             return quant
-    
+
     def deposit(self, quant):
         self.supply += quant
-

@@ -6,11 +6,10 @@ from typing import List, Tuple
 
 from src.config.global_conf import gconf
 
+
 @attrs.define
 class EventHandler:
-
     def handle_events(self) -> List[AntHillEvent]:
-        
         events = []
 
         # Handle events
@@ -28,18 +27,21 @@ class EventHandler:
             return MouseClickEvent.from_pygame_get_pos()
         else:
             return None
-    
+
     @staticmethod
     def handle_exit_event(event) -> AntHillEvent:
         return CloseEvent()
+
 
 @attrs.define
 class AntHillEvent:
     ...
 
+
 @attrs.define
 class CloseEvent(AntHillEvent):
     ...
+
 
 @attrs.define
 class MouseClickEvent(AntHillEvent):
@@ -47,12 +49,14 @@ class MouseClickEvent(AntHillEvent):
 
     @classmethod
     def from_pygame_get_pos(cls):
-        """returns a mouse click event if the mouse click is 
+        """returns a mouse click event if the mouse click is
         within the pygame screen"""
 
         click_location = pygame.mouse.get_pos()
-        if (0 <= click_location[0] < gconf.scrn_ht 
-            and 0 <= click_location[1] < gconf.scrn_wdt):
+        if (
+            0 <= click_location[0] < gconf.scrn_ht
+            and 0 <= click_location[1] < gconf.scrn_wdt
+        ):
             return cls(click_location)
         else:
             return None

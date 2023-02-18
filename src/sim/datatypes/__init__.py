@@ -1,6 +1,7 @@
 import attr
 from typing import Tuple
 
+
 @attr.define
 class SimPos:
     x: float
