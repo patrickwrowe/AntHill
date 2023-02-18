@@ -15,10 +15,10 @@ class AntFood(items.Item):
         """Generates a food item with a random value
         between 0 and 1."""
         
-        value = random.random()
+        value = random.random() * sconf.max_new_food_value
 
         # Randomly distribute food around the map.
         init_pos = items.ItemPos(sconf.sim_x * random.random(),
                                  sconf.sim_y * random.random())
         return cls(pos = init_pos, 
-                       value = value)
+                    value = value)
