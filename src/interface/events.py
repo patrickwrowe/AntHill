@@ -16,14 +16,22 @@ class EventHandler:
         # Handle events
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                events.append(CloseEvent())
+                events.append(self.handle_exit_event(event))
             elif event.type == pygame.MOUSEBUTTONDOWN:
-                if event.button == 1:  # left mouse button
-                    mouse_pos = pygame.mouse.get_pos()
-                    if 0 <= mouse_pos[0] < gconf.scrn_ht and 0 <= mouse_pos[1] < gconf.scrn_wdt:
-                        events.append(MouseClickEvent(mouse_pos))
+                events.append(self.handle_mouse_events(event))
 
         return tuple(events)
+
+    @staticmethod
+    def handle_mouse_events(event) -> AntHillEvent:
+        if event.button == 1:  # left mouse button
+            return MouseClickEvent.from_pygame_get_pos()
+        else:
+            return None
+    
+    @staticmethod
+    def handle_exit_event(event) -> AntHillEvent:
+        return CloseEvent()
 
 @attrs.define
 class AntHillEvent:
@@ -36,3 +44,15 @@ class CloseEvent(AntHillEvent):
 @attrs.define
 class MouseClickEvent(AntHillEvent):
     click_location: Tuple[int, int]
+
+    @classmethod
+    def from_pygame_get_pos(cls):
+        """returns a mouse click event if the mouse click is 
+        within the pygame screen"""
+
+        click_location = pygame.mouse.get_pos()
+        if (0 <= click_location[0] < gconf.scrn_ht 
+            and 0 <= click_location[1] < gconf.scrn_wdt):
+            return cls(click_location)
+        else:
+            return None
