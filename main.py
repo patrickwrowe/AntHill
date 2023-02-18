@@ -3,6 +3,7 @@ import pygame
 import sys
 
 from src.interface import events, draw
+from src.config.global import gconf
 from src import setup, shutdown
 
 @attrs.define

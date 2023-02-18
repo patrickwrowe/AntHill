@@ -3,6 +3,8 @@ import pygame
 
 from typing import Any
 
+from src.config.global_conf import gconf
+
 @attrs.define
 class PGSetup:
 
@@ -16,9 +18,7 @@ class PGSetup:
         pygame.init()
 
         # Set up the display
-        width = 800
-        height = 600
-        screen = pygame.display.set_mode((width, height))
+        screen = pygame.display.set_mode((gconf.scrn_wdt, gconf.scrn_ht))
         pygame.display.set_caption("Ant Hill")
 
         # Set up the clock

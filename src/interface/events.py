@@ -4,8 +4,7 @@ import pygame
 
 from typing import List, Tuple
 
-HEIGHT = 600
-WIDTH = 800
+from src.config.global_conf import gconf
 
 @attrs.define
 class EventHandler:
@@ -21,7 +20,7 @@ class EventHandler:
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1:  # left mouse button
                     mouse_pos = pygame.mouse.get_pos()
-                    if 0 <= mouse_pos[0] < HEIGHT and 0 <= mouse_pos[1] < WIDTH:
+                    if 0 <= mouse_pos[0] < gconf.scrn_ht and 0 <= mouse_pos[1] < gconf.scrn_wdt:
                         events.append(MouseClickEvent(mouse_pos))
 
         return tuple(events)
