@@ -17,6 +17,7 @@ class SimConf:
     init_location_pheremone_level: float = 1.0
 
     # Food Settings
-    max_new_food_value: float = 1.0
+    max_basic_food_supply: float = 1.0
+    min_basic_food_supply: float = 0.1
 
 sconf = SimConf()
