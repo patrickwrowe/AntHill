@@ -38,8 +38,8 @@ class AntPheremones:
 
     @classmethod
     def for_ant(cls, pos: SimPos):
-        location = AntLocationPheremone.new_pheremone(pos=SimPos)
-        found_food = FoundFoodPheremone.new_pheremone(pos=SimPos)
+        location = AntLocationPheremone.new_pheremone(pos=pos)
+        found_food = FoundFoodPheremone.new_pheremone(pos=pos)
 
         return cls(pos = pos,
                    location = location,

@@ -2,12 +2,33 @@ import pytest
 from src.sim.entities import ant
 from src.config.sim_conf import sconf
 from tests import test_utils
-import attrs
 
 def test_basic_ants():
     new_ant = ant.Ant.basic_ant()
     assert test_utils.check_in_sim_box(new_ant.pos.x, new_ant.pos.y)
     
+    # Get the position of the location pheremone "item"
+    old_pheremone_pos = (new_ant.ant_pheremones.location.pos.x, 
+                        new_ant.ant_pheremones.location.pos.y)
+    old_ant_pos = (new_ant.pos.x,
+                   new_ant.pos.y)
+    assert old_ant_pos == old_pheremone_pos
+
+    # okay now lets move that ant
+    new_ant.pos.x += 10
+    new_ant.pos.y += 10
+    new_ant_pos = (new_ant.pos.x, new_ant.pos.y)
+    new_pheremone_pos = (new_ant.ant_pheremones.location.pos.x, 
+                         new_ant.ant_pheremones.location.pos.y)
+    assert new_ant_pos != old_ant_pos
+    assert new_ant_pos != old_pheremone_pos
+
+    # Verify that the item contained by the ant moves with the ant.
+    # Of course we can just check the identity of these things 
+    # rather than specific values
+    assert new_ant_pos == new_pheremone_pos
+    assert new_ant.pos == new_ant.ant_pheremones.location.pos
+    assert new_ant.pos == new_ant.ant_pheremones.found_food.pos
 
 def test_ant_pheremones():
 
