@@ -31,8 +31,11 @@ class AntHill:
 
             # Janky hack for now
             # Probably want to find an "elegant" way to do this
-            if events.CloseEvent in ah_events:
-                running = False
+            for event in ah_events:
+                if isinstance(event, events.CloseEvent):
+                    running = False
+                elif isinstance(event, events.MouseClickEvent):
+                    print(f"mouse clicked at {event.click_location[0]}, {event.click_location[1]}")
 
             # Update game state
             # ...
