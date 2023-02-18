@@ -1,7 +1,8 @@
+import os
+import sys
+
 import attrs
 import pygame
-import sys
-import os
 
 from src.config.global_conf import gconf
 

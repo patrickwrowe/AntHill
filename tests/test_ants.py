@@ -1,6 +1,7 @@
 import pytest
-from src.sim.entities import ant
+
 from src.config.sim_conf import sconf
+from src.sim.entities import ant
 from tests import test_utils
 
 

@@ -1,7 +1,7 @@
 import attrs
 
-from src.interface import events, draw
 from src import setup, shutdown
+from src.interface import draw, events
 from src.sim import sim
 
 

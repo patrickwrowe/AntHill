@@ -1,8 +1,9 @@
 from __future__ import annotations
-import attrs
-import pygame
 
 from typing import List, Tuple
+
+import attrs
+import pygame
 
 from src.config.global_conf import gconf
 

@@ -1,8 +1,9 @@
-from src.sim.items import food
-from src.config.sim_conf import sconf
-from tests import test_utils
-import pytest
 import numpy as np
+import pytest
+
+from src.config.sim_conf import sconf
+from src.sim.items import food
+from tests import test_utils
 
 
 def test_basic_food():

@@ -1,5 +1,6 @@
-import attr
 from typing import Tuple
+
+import attr
 
 
 @attr.define

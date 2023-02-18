@@ -1,10 +1,9 @@
 from __future__ import annotations
+
 import attrs
 
 from src.config.sim_conf import sconf
-from src.sim.datatypes import items
-
-from src.sim.datatypes import SimPos
+from src.sim.datatypes import SimPos, items
 
 
 @attrs.define

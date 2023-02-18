@@ -1,8 +1,9 @@
-import attrs
 from typing import List
 
-from src.sim.datatypes import entities, items
+import attrs
+
 from src.config.sim_conf import sconf
+from src.sim.datatypes import entities, items
 from src.sim.entities import ant
 from src.sim.items import food
 
