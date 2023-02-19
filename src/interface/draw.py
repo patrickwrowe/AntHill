@@ -35,6 +35,6 @@ class Artist:
                                 radius=1)
             
             # This is probably HORRIBLY inefficient.
-            # Definitely ought to optimise this.
+            # Definitely ought to optimise this - disabling for now in favour of dots.
             # coords = tuple(np.array(entity.pos.coords) - np.array(self.images[0].get_rect().center))
             # screen.blit(self.images[0], coords)

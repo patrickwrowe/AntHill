@@ -3,8 +3,9 @@ import attrs
 
 @attrs.define
 class SimConf:
+
     # Initial simulation settings.
-    init_num_basic_ants: int = 10
+    init_num_basic_ants: int = 1000
     init_num_basic_food: int = 10
 
     # Simulation dimensions are not locked

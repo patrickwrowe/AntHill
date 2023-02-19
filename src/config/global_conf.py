@@ -7,5 +7,6 @@ class GlobalConfig:
     scrn_wdt: int = 800
     headless: bool = True
 
+    framerate = 240
 
 gconf = GlobalConfig()

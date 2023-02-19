@@ -3,7 +3,7 @@ import attrs
 from src import setup, shutdown
 from src.interface import draw, events
 from src.sim import sim
-
+from src.config.global_conf import gconf
 
 @attrs.define
 class AntHill:
@@ -57,7 +57,7 @@ class AntHill:
             self.artist.draw_frame(self.pg_setup.screen, entities)
 
             # Control the frame rate
-            self.pg_setup.clock.tick(60)
+            self.pg_setup.clock.tick(gconf.framerate)
 
         # Quit Pygame
         shutdown.exit_anthill()
