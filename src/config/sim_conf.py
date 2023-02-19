@@ -21,5 +21,17 @@ class SimConf:
     max_basic_food_supply: float = 1.0
     min_basic_food_supply: float = 0.1
 
+    # Default map resolution
+    default_map_resolution_x = sim_x
+    default_map_resolution_y = sim_y
+
+    # Environmental Variables
+    init_temp: int = 298
+
+    # Altitude
+    perlin_num_octaves: int = 5
+    perlin_persistence: float = 0.5
+    perlin_lacunarity: float = 2.0
+    perlin_random_seed: int = 101
 
 sconf = SimConf()
