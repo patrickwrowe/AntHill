@@ -61,4 +61,4 @@ class BasicAntHillSim(AntHillSim):
         
         stochastic.random_move(self.sim_entities)
 
-        return self.sim_entities
+        return self.sim_entities, self.sim_maps["AltitudeMap"]

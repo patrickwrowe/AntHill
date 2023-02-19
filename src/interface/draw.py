@@ -1,6 +1,7 @@
 import attrs
 import pygame
 from src.sim.datatypes.entities import Entity
+from src.sim.datatypes.maps import MapArray
 from src.setup import PGSetup
 from typing import List
 
@@ -16,10 +17,13 @@ class Artist:
     def from_config(cls, pg_setup: PGSetup):
         return cls(images = pg_setup.images)
 
-    def draw_frame(self, screen: pygame.Surface, entities: List[Entity]):
+    def draw_frame(self, screen: pygame.Surface, entities: List[Entity], map = MapArray):
         
         # Draw to the screen
         screen.fill((255, 255, 255))
+
+        # draw dat map
+        self.draw_map(screen=screen, map=map)
 
         # Draw dem ants
         self.draw_entities(screen=screen, entities=entities)
@@ -38,3 +42,13 @@ class Artist:
             # Definitely ought to optimise this - disabling for now in favour of dots.
             # coords = tuple(np.array(entity.pos.coords) - np.array(self.images[0].get_rect().center))
             # screen.blit(self.images[0], coords)
+
+    def draw_map(self, screen: pygame.Surface, map: MapArray):
+
+        terrain_surface = map.values_as_image
+
+        # Scale the terrain surface to fit the screen
+        terrain_surface = pygame.transform.scale(terrain_surface, screen.get_size())
+
+        # Blit the terrain surface onto the screen
+        screen.blit(terrain_surface, (0, 0))
