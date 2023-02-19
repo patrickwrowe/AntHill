@@ -10,6 +10,7 @@ class AntHill:
     system_setup: setup.SystemSetup
     pg_setup: setup.PGSetup
     event_handler: events.EventHandler
+    artist: draw.Artist
     simulation: sim.AntHillSim
 
     @classmethod
@@ -17,14 +18,16 @@ class AntHill:
         """Set up the pygame environment required."""
 
         system_setup = setup.SystemSetup.system_setup()
-        pg_setup = setup.PGSetup.pygame_setup()
+        pg_setup = setup.PGSetup.pygame_setup(system_setup.root_dir)
         event_handler = events.EventHandler()
+        artist = draw.Artist.from_config(pg_setup=pg_setup)
         simulation = sim.BasicAntHillSim.new_sim()
 
         return cls(
             system_setup=system_setup,
             pg_setup=pg_setup,
             event_handler=event_handler,
+            artist=artist,
             simulation=simulation,
         )
 
@@ -51,7 +54,7 @@ class AntHill:
             # Update game state
             entities = self.simulation.update_sim()
 
-            draw.draw_frame(self.pg_setup.screen, entities)
+            self.artist.draw_frame(self.pg_setup.screen, entities)
 
             # Control the frame rate
             self.pg_setup.clock.tick(60)

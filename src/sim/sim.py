@@ -50,6 +50,7 @@ class BasicAntHillSim(AntHillSim):
         """Update the simulation"""
 
         self.num_updates += 1
+        
         stochastic.random_move(self.sim_entities)
 
         return self.sim_entities
