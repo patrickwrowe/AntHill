@@ -1,10 +1,9 @@
 from __future__ import annotations
 import numpy as np
 import attrs
-import matplotlib.pyplot as plt
-import pygame
+import functools
 
-@attrs.define
+@attrs.define(slots=False)
 class MapArray:
     """
     A map contains information about the tiling
@@ -18,26 +17,11 @@ class MapArray:
     def new_map(cls) -> MapArray:
         raise NotImplementedError()
 
-    @property
-    def values_as_image(self):
-        # Create a 2D array with terrain colormap
-        terrain = plt.get_cmap('terrain')(np.linspace(0, 1, 256))[:, :3] * 255
-        terrain = terrain.astype(np.uint8)
-
-        values = self.normalised_values
-
-        # Convert the noise array to a 2D array of color indices
-        color_indices = (values * (len(terrain) - 1)).astype(np.int32)
-
-        # Create the terrain image using the color indices
-        terrain_image = terrain[color_indices]
-
-        # Convert the terrain image to a pygame surface
-        terrain_surface = pygame.surfarray.make_surface(terrain_image)
-
-        return terrain_surface
-
-    @property 
+    @functools.cached_property 
     def normalised_values(self):
         # Scale the noise array to be between 0 and 1
-        return (self.values - np.min(self.values)) / (np.max(self.values) - np.min(self.values))
+
+        values = (self.values - np.min(self.values)) / (np.max(self.values) - np.min(self.values))
+        values = np.nan_to_num(values, 0)
+
+        return values
