@@ -64,8 +64,8 @@ class BasicAntHillSim(AntHillSim):
 
         self.num_updates += 1
 
-        if sconf.random_move == True:
-            stochastic.random_move(self.sim_entities)
+        if sconf.brownian_motion == True:
+            stochastic.brownian_motion(self.sim_entities)
         if sconf.mmc_move == True:
             stochastic.metropolis_monte_carlo(
                 self.sim_entities, self.sim_maps["AltitudeMap"]

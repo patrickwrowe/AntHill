@@ -9,6 +9,7 @@ class GlobalConfig:
 
     framerate = 240
     print_fps_every = 25
+    draw_frame_every = 10
 
 
 gconf = GlobalConfig()

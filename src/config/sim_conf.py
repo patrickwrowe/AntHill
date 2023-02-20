@@ -14,13 +14,13 @@ class SimConf:
 
     # Types of simulation moves to make when
     # Updating the simulation state
-    random_move: bool = True
-    mmc_move: bool = False
+    brownian_motion: bool = False
+    mmc_move: bool = True
 
     # Settings for specific movement rules
     # Metropolis Monte-Carlo
     mmc_move_size: float = 0.5
-    mmc_move_temp: float = 0.0001
+    mmc_move_temp: float = 0.05
     mmc_max_attempts: int = 5
 
     # Pheremone Settings

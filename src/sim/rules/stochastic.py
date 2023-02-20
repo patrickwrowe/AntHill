@@ -6,7 +6,7 @@ import numba
 from src.config.sim_conf import sconf
 from src.sim.datatypes import SimPos, entities, maps
 
-def random_move(sim_entities: List[entities.Entity]) -> None:
+def brownian_motion(sim_entities: List[entities.Entity]) -> None:
     """Moves entities randomly, with no care for
     any of the rules or regulations in the world,
     except for the boundaries of the known universe."""
@@ -57,7 +57,7 @@ def metropolis_move(
     """
 
     # Generate a random displacement vector
-    move = tuple(move_size * np.array([np.random.rand(), np.random.rand()]))
+    move = tuple(move_size * 2 * np.array([np.random.rand(), np.random.rand()]) - 0.5)
 
     # Compute the new position
     # Generate a new SimPos object to see if the move would be accepted

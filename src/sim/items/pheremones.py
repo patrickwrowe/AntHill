@@ -25,7 +25,8 @@ class FoundFoodPheremone(Pheremone):
     """Pheremone is resupplied on finding food.
 
     Ants leave this trail to indicate to other ants
-    where food has been found."""
+    where food has been found.
+    """
 
     @classmethod
     def new_pheremone(cls, pos: SimPos):
