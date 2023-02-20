@@ -9,7 +9,7 @@ from src.sim.datatypes import SimPos
 class Item:
     """Base class for non-sentient
     collectible items in the sim.
-    
+
     Attributes:
         pos (SimPos): The position of the item
     """

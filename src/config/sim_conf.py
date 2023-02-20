@@ -46,4 +46,5 @@ class SimConf:
     # perlin_lacunarity: float = 2
     # perlin_random_seed: int = 101
 
+
 sconf = SimConf()
