@@ -9,4 +9,5 @@ class GlobalConfig:
 
     framerate = 240
 
+
 gconf = GlobalConfig()

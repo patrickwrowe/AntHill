@@ -3,7 +3,6 @@ import attrs
 
 @attrs.define
 class SimConf:
-
     # Initial simulation settings.
     init_num_basic_ants: int = 1000
     init_num_basic_food: int = 10
@@ -36,8 +35,9 @@ class SimConf:
 
     # Altitude
     perlin_num_octaves: int = 20
-    perlin_persistence: float = 0.5 # 0.7
+    perlin_persistence: float = 0.5  # 0.7
     perlin_lacunarity: float = 2.5
     perlin_random_seed: int = 101
+
 
 sconf = SimConf()

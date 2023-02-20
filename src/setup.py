@@ -1,11 +1,12 @@
 import os
 import sys
+from typing import List
 
 import attrs
 import pygame
 
 from src.config.global_conf import gconf
-from typing import List
+
 
 @attrs.define
 class PGSetup:
@@ -40,11 +41,14 @@ class PGSetup:
 
         # load the images from file
         # This doesn't really look great to be honest.
-        all_images = [pygame.image.load(os.path.join(images_dir, image_file)).convert_alpha() 
-                      for image_file in all_image_files]
+        all_images = [
+            pygame.image.load(os.path.join(images_dir, image_file)).convert_alpha()
+            for image_file in all_image_files
+        ]
         all_images = [pygame.transform.scale(image, (10, 10)) for image in all_images]
 
         return all_images
+
 
 @attrs.define
 class SystemSetup:

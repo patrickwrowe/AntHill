@@ -4,6 +4,7 @@ import attr
 
 from src.config.sim_conf import sconf
 
+
 @attr.define
 class SimPos:
     x: float
@@ -24,7 +25,7 @@ class SimPos:
         self.vec = (self.x - old_x, self.y - old_y)
 
     def _update_coord(self, val, step, boundary):
-        """Update the coordinates with some vector """
+        """Update the coordinates with some vector"""
         newpos = val + step
 
         if 0 <= newpos <= boundary:

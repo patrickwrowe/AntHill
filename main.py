@@ -1,9 +1,10 @@
 import attrs
 
 from src import setup, shutdown
+from src.config.global_conf import gconf
 from src.interface import draw, events
 from src.sim import sim
-from src.config.global_conf import gconf
+
 
 @attrs.define
 class AntHill:
@@ -54,10 +55,9 @@ class AntHill:
             # Update game state
             entities, items, map = self.simulation.update_sim()
 
-            self.artist.draw_frame(screen = self.pg_setup.screen,
-                                   entities = entities, 
-                                   items = items,
-                                   map = map)
+            self.artist.draw_frame(
+                screen=self.pg_setup.screen, entities=entities, items=items, map=map
+            )
 
             # Control the frame rate
             self.pg_setup.clock.tick(gconf.framerate)

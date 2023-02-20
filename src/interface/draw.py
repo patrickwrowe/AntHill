@@ -1,25 +1,32 @@
+from typing import List
+
 import attrs
+import matplotlib.pyplot as plt
+import numpy as np
 import pygame
+
+from src.setup import PGSetup
 from src.sim.datatypes.entities import Entity
 from src.sim.datatypes.items import Item
 from src.sim.datatypes.maps import MapArray
-from src.setup import PGSetup
-from typing import List
-import matplotlib.pyplot as plt
 
-import numpy as np
 
 @attrs.define
 class Artist:
-
     # This should be a dict or something
     images: List[pygame.Surface]
 
     @classmethod
     def from_config(cls, pg_setup: PGSetup):
-        return cls(images = pg_setup.images)
+        return cls(images=pg_setup.images)
 
-    def draw_frame(self, screen: pygame.Surface, entities: List[Entity], items: List[Item], map = MapArray):
+    def draw_frame(
+        self,
+        screen: pygame.Surface,
+        entities: List[Entity],
+        items: List[Item],
+        map=MapArray,
+    ):
         """
         Draws a single frame of the simulation.
 
@@ -60,10 +67,7 @@ class Artist:
         """
 
         for entity in entities:
-            pygame.draw.circle(screen,
-                            (0, 0, 0),
-                                entity.pos.coords,
-                                radius=1)
+            pygame.draw.circle(screen, (0, 0, 0), entity.pos.coords, radius=1)
 
     def draw_items(self, screen: pygame.Surface, items: List[Item]):
         """
@@ -78,15 +82,14 @@ class Artist:
         """
 
         for item in items:
-            pygame.draw.circle(screen,
-                                (200, 50, 0),
-                                item.pos.coords,
-                                radius=3)
+            pygame.draw.circle(screen, (200, 50, 0), item.pos.coords, radius=3)
 
-    def draw_map(self, screen: pygame.Surface, map: MapArray, colormap: str = 'terrain') -> None:
+    def draw_map(
+        self, screen: pygame.Surface, map: MapArray, colormap: str = "terrain"
+    ) -> None:
         """
-        This function takes a Pygame screen and a MapArray object, and 
-        draws the map represented by the MapArray on the screen 
+        This function takes a Pygame screen and a MapArray object, and
+        draws the map represented by the MapArray on the screen
         using a terrain colormap.
 
         Args:
