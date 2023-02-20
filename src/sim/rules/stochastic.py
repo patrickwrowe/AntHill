@@ -1,10 +1,10 @@
 from typing import List, Tuple
 
 import numpy as np
+import numba
 
 from src.config.sim_conf import sconf
 from src.sim.datatypes import SimPos, entities, maps
-
 
 def random_move(sim_entities: List[entities.Entity]) -> None:
     """Moves entities randomly, with no care for

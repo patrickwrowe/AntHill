@@ -6,8 +6,8 @@ from src.config.sim_conf import sconf
 from src.sim.datatypes import entities, items, maps
 from src.sim.entities import ant
 from src.sim.items import food, pheremones
-from src.sim.maps import consumables_maps, environment_maps
 from src.sim.rules import stochastic
+from src.sim.maps import environment_maps, consumables_maps
 
 
 @attrs.define
@@ -64,9 +64,11 @@ class BasicAntHillSim(AntHillSim):
 
         self.num_updates += 1
 
-        # stochastic.random_move(self.sim_entities)
-        stochastic.metropolis_monte_carlo(
-            self.sim_entities, self.sim_maps["AltitudeMap"]
-        )
+        if sconf.random_move == True:
+            stochastic.random_move(self.sim_entities)
+        if sconf.mmc_move == True:
+            stochastic.metropolis_monte_carlo(
+                self.sim_entities, self.sim_maps["AltitudeMap"]
+            )
 
         return self.sim_entities, self.sim_items, self.sim_maps["AltitudeMap"]

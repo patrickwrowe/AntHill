@@ -12,6 +12,11 @@ class SimConf:
     sim_x: int = 800
     sim_y: int = 600
 
+    # Types of simulation moves to make when
+    # Updating the simulation state
+    random_move: bool = True
+    mmc_move: bool = False
+
     # Settings for specific movement rules
     # Metropolis Monte-Carlo
     mmc_move_size: float = 0.5
