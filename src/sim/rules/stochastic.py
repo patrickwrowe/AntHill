@@ -6,7 +6,7 @@ from src.config.sim_conf import sconf
 from src.sim.datatypes import SimPos, entities, maps
 
 
-def random_move(sim_entities: List[entities.Entity]):
+def random_move(sim_entities: List[entities.Entity]) -> None:
     """Moves entities randomly, with no care for
     any of the rules or regulations in the world,
     except for the boundaries of the known universe."""
@@ -17,10 +17,16 @@ def random_move(sim_entities: List[entities.Entity]):
 
 def metropolis_monte_carlo(
     sim_entites: List[entities.Entity], potential: maps.MapArray
-):
+) -> None:
     """
     Moves entities according to the Metropolis Monte Carlo
     algorithm.
+
+    Args:
+        sim_entites (List[Entity]): A list of entities to be moved.
+        potential (MapArray): The potential to be used to move entities
+    Returns:
+        None
     """
 
     for entity in sim_entites:
@@ -51,7 +57,7 @@ def metropolis_move(
     """
 
     # Generate a random displacement vector
-    move = tuple(move_size * np.random.randn(2))
+    move = tuple(move_size * np.array([np.random.rand(), np.random.rand()]))
 
     # Compute the new position
     # Generate a new SimPos object to see if the move would be accepted
@@ -60,8 +66,8 @@ def metropolis_move(
 
     # Compute the change in potential energy
     delta_energy = (
-        potential.normalised_values[int(pos_new.y), int(pos_new.x)]
-        - potential.normalised_values[int(pos.y), int(pos.x)]
+        potential.normalised_values[int(pos_new.x), int(pos_new.y)]
+        - potential.normalised_values[int(pos.x), int(pos.y)]
     )
 
     # Accept or reject the move based on the Metropolis criterion

@@ -5,7 +5,6 @@ from src.config.global_conf import gconf
 from src.interface import draw, events
 from src.sim import sim
 
-
 @attrs.define
 class AntHill:
     system_setup: setup.SystemSetup
@@ -33,9 +32,17 @@ class AntHill:
         )
 
     def run_anthill(self):
+
+        main_ticks = 0
+
         # Main loop
         running = True
         while running:
+
+            # print the fps
+            if main_ticks % gconf.print_fps_every == 0:
+                print(f"FPS: {self.pg_setup.clock.get_fps()}")
+
             # Get a tuple of AntHillEvents to begin the loop
             # These deal exclusively with user input
             ah_events = self.event_handler.handle_events()
@@ -56,11 +63,13 @@ class AntHill:
             entities, items, map = self.simulation.update_sim()
 
             self.artist.draw_frame(
-                screen=self.pg_setup.screen, entities=entities, items=items, map=map
+                screen=self.pg_setup.screen, clock=self.pg_setup.clock, entities=entities, items=items, map=map
             )
 
             # Control the frame rate
             self.pg_setup.clock.tick(gconf.framerate)
+
+            main_ticks += 1
 
         # Quit Pygame
         shutdown.exit_anthill()

@@ -2,6 +2,8 @@ import pytest
 
 from src.config.sim_conf import sconf
 from src.sim.entities import ant
+from src.sim.datatypes import SimPos
+from src.sim.items.pheremones import Pheremone, AntLocationPheremone, FoundFoodPheremone, AntPheremones
 from tests import test_utils
 
 
@@ -67,3 +69,47 @@ def test_ant_pheremones():
 
     new_ant.ant_pheremones.found_food.deposit(0.5)
     assert new_ant.ant_pheremones.found_food.supply == 0.5
+
+def test_pheremone():
+    pos = SimPos(0, 0)
+    pheremone = Pheremone(pos=pos, supply=5.0)
+    assert pheremone.pos == pos
+    assert pheremone.supply == 5.0
+
+def test_ant_location_pheremone():
+    pos = SimPos(0, 0)
+    pheremone = AntLocationPheremone(pos=pos, supply=10.0)
+    assert pheremone.pos == pos
+    assert pheremone.supply == 10.0
+
+def test_found_food_pheremone():
+    pos = SimPos(0, 0)
+    pheremone = FoundFoodPheremone(pos=pos, supply=sconf.init_found_food_pheremone_level)
+    assert pheremone.pos == pos
+    assert pheremone.supply == sconf.init_found_food_pheremone_level
+
+def test_ant_pheremones():
+    pos = SimPos(0, 0)
+    ant_pheremones = AntPheremones.for_ant(pos=pos)
+    assert ant_pheremones.pos == pos
+    assert isinstance(ant_pheremones.location, AntLocationPheremone)
+    assert isinstance(ant_pheremones.found_food, FoundFoodPheremone)
+
+def test_ant_pheremones():
+    new_ant = ant.Ant.basic_ant()
+
+    # Test that the Ant's pheremones start at the initial levels
+    assert  new_ant.ant_pheremones.location.supply == sconf.init_location_pheremone_level
+    assert  new_ant.ant_pheremones.found_food.supply == sconf.init_found_food_pheremone_level
+
+    # Test that withdrawing from the Ant's pheremones correctly updates their supply
+    initial_location_supply =  new_ant.ant_pheremones.location.supply
+    amount_withdrawn = 0.5
+    new_ant.ant_pheremones.location.withdraw(amount_withdrawn)
+    assert new_ant.ant_pheremones.location.supply == initial_location_supply - amount_withdrawn
+
+    # Test that depositing into the Ant's pheremones correctly updates their supply
+    initial_food_supply = new_ant.ant_pheremones.found_food.supply
+    amount_deposited = 0.25
+    new_ant.ant_pheremones.found_food.deposit(amount_deposited)
+    assert new_ant.ant_pheremones.found_food.supply == initial_food_supply + amount_deposited

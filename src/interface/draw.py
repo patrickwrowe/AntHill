@@ -23,6 +23,7 @@ class Artist:
     def draw_frame(
         self,
         screen: pygame.Surface,
+        clock: pygame.time.Clock,
         entities: List[Entity],
         items: List[Item],
         map=MapArray,
@@ -50,6 +51,10 @@ class Artist:
 
         # Draw dem ants
         self.draw_entities(screen=screen, entities=entities)
+
+        # Draw fps
+        # Disabled as text doesn't seem to work...
+        # self.draw_fps(screen=screen, clock=clock)
 
         # Update the display
         pygame.display.flip()
@@ -117,7 +122,13 @@ class Artist:
         terrain_surface = pygame.surfarray.make_surface(terrain_image)
 
         # Scale the terrain surface to fit the screen
-        terrain_surface = pygame.transform.scale(terrain_surface, screen.get_size())
+        # terrain_surface = pygame.transform.scale(terrain_surface, screen.get_size())
 
         # Blit the terrain surface onto the screen
         screen.blit(terrain_surface, (0, 0))
+    
+    def draw_fps(self, screen: pygame.Surface, clock: pygame.time.Clock):
+        font = pygame.font.Font('freesansbold.ttf', 18)
+        fps = str(int(self.clock.get_fps()))
+        fps_text = font.render(fps, 1, pygame.Color("coral"))
+        return fps_text

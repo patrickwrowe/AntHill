@@ -24,8 +24,11 @@ class SimPos:
         self.y = self._update_coord(self.y, vec[1], sconf.sim_y)
         self.vec = (self.x - old_x, self.y - old_y)
 
-    def _update_coord(self, val, step, boundary):
+    def _update_coord(self, val: float, step: float, boundary: int) -> Tuple[float, bool]:
         """Update the coordinates with some vector"""
+
+        boundary -= 1
+
         newpos = val + step
 
         if 0 <= newpos <= boundary:

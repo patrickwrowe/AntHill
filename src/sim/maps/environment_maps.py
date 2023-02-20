@@ -65,6 +65,4 @@ class AltitudeMap(maps.MapArray):
 
             noise_arr += np.vectorize(pnoise2)(scaled_y, scaled_x).T * octave_factor
 
-        noise_arr = noise_arr.T
-
         return noise_arr

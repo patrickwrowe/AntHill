@@ -4,7 +4,7 @@ import attrs
 @attrs.define
 class SimConf:
     # Initial simulation settings.
-    init_num_basic_ants: int = 1000
+    init_num_basic_ants: int = 100
     init_num_basic_food: int = 10
 
     # Simulation dimensions are not locked
@@ -15,7 +15,7 @@ class SimConf:
     # Settings for specific movement rules
     # Metropolis Monte-Carlo
     mmc_move_size: float = 0.5
-    mmc_move_temp: float = 0.05
+    mmc_move_temp: float = 0.0001
     mmc_max_attempts: int = 5
 
     # Pheremone Settings
@@ -34,10 +34,16 @@ class SimConf:
     init_temp: int = 298
 
     # Altitude
+    # Settings for good looking map
     perlin_num_octaves: int = 20
     perlin_persistence: float = 0.5  # 0.7
     perlin_lacunarity: float = 2.5
     perlin_random_seed: int = 101
 
+    # Good for easy testing of moves - nice n' smooth.
+    # perlin_num_octaves: int = 1
+    # perlin_persistence: float = 0.5  # 0.7
+    # perlin_lacunarity: float = 2
+    # perlin_random_seed: int = 101
 
 sconf = SimConf()

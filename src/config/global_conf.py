@@ -8,6 +8,7 @@ class GlobalConfig:
     headless: bool = True
 
     framerate = 240
+    print_fps_every = 25
 
 
 gconf = GlobalConfig()

@@ -8,7 +8,11 @@ from src.sim.datatypes import SimPos
 @attrs.define
 class Item:
     """Base class for non-sentient
-    collectible items in the sim."""
+    collectible items in the sim.
+    
+    Attributes:
+        pos (SimPos): The position of the item
+    """
 
     pos: SimPos
 
