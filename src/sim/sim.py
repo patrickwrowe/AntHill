@@ -59,6 +59,7 @@ class BasicAntHillSim(AntHillSim):
 
         self.num_updates += 1
         
-        stochastic.random_move(self.sim_entities)
+        # stochastic.random_move(self.sim_entities)
+        stochastic.metropolis_monte_carlo(self.sim_entities, self.sim_maps["AltitudeMap"])
 
-        return self.sim_entities, self.sim_maps["AltitudeMap"]
+        return self.sim_entities, self.sim_items, self.sim_maps["AltitudeMap"]

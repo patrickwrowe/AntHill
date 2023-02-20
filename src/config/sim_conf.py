@@ -13,6 +13,12 @@ class SimConf:
     sim_x: int = 800
     sim_y: int = 600
 
+    # Settings for specific movement rules
+    # Metropolis Monte-Carlo
+    mmc_move_size: float = 0.5
+    mmc_move_temp: float = 0.05
+    mmc_max_attempts: int = 5
+
     # Pheremone Settings
     init_found_food_pheremone_level: float = 0.0
     init_location_pheremone_level: float = 1.0
@@ -29,9 +35,9 @@ class SimConf:
     init_temp: int = 298
 
     # Altitude
-    perlin_num_octaves: int = 5
-    perlin_persistence: float = 0.5
-    perlin_lacunarity: float = 2.0
+    perlin_num_octaves: int = 20
+    perlin_persistence: float = 0.5 # 0.7
+    perlin_lacunarity: float = 2.5
     perlin_random_seed: int = 101
 
 sconf = SimConf()
