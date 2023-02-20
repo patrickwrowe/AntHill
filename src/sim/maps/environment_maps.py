@@ -46,8 +46,8 @@ class AltitudeMap(maps.MapArray):
             np.random.seed(seed)
 
         rows, cols = shape
-        x = np.linspace(0, 1, num=cols, endpoint=False)
-        y = np.linspace(0, 1, num=rows, endpoint=False)
+        x = np.linspace(0, sconf.perlin_scale_x, num=cols, endpoint=False)
+        y = np.linspace(0, sconf.perlin_scale_y, num=rows, endpoint=False)
         xv, yv = np.meshgrid(x, y, indexing="ij")
         noise_arr = np.zeros(shape)
         for o in range(octaves):
@@ -63,6 +63,9 @@ class AltitudeMap(maps.MapArray):
                 scaled_x += offset_x
                 scaled_y += offset_y
 
+            # The "noise" library is using C and wants you to check on a per-sample
+            # Basis. Use np.vectorize to get a version of the function which
+            # lets you pass numpy arrays instead of sets of floats.
             noise_arr += np.vectorize(pnoise2)(scaled_y, scaled_x).T * octave_factor
 
         return noise_arr

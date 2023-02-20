@@ -1,10 +1,14 @@
 from typing import List, Tuple
 
 import numpy as np
+from numpy.random import rand
+from numpy import exp
 import numba
 
 from src.config.sim_conf import sconf
 from src.sim.datatypes import SimPos, entities, maps
+
+_tmp_sim_pos = SimPos(0, 0)
 
 def brownian_motion(sim_entities: List[entities.Entity]) -> None:
     """Moves entities randomly, with no care for
@@ -30,12 +34,16 @@ def metropolis_monte_carlo(
     """
 
     for entity in sim_entites:
-        for i in range(sconf.mmc_max_attempts):
+        accepted = False
+        n_mmc_iter = 0
+
+        while n_mmc_iter < sconf.mmc_max_attempts and accepted == False:
             move, accepted = metropolis_move(potential=potential, pos=entity.pos)
+            n_mmc_iter += 1
+
             if accepted:
                 entity.pos.update_pos(move)
-
-
+        
 def metropolis_move(
     potential: maps.MapArray,
     pos: SimPos,
@@ -57,23 +65,34 @@ def metropolis_move(
     """
 
     # Generate a random displacement vector
-    move = tuple(move_size * 2 * np.array([np.random.rand(), np.random.rand()]) - 0.5)
+    move = new_mmc_move(move_size=move_size)
 
     # Compute the new position
     # Generate a new SimPos object to see if the move would be accepted
-    pos_new = SimPos(x=pos.x, y=pos.y)
+    pos_new = _tmp_sim_pos
+    pos_new.x, pos_new.y = pos.x, pos.y
     pos_new.update_pos(move)
 
     # Compute the change in potential energy
-    delta_energy = (
-        potential.normalised_values[int(pos_new.x), int(pos_new.y)]
-        - potential.normalised_values[int(pos.x), int(pos.y)]
-    )
+    # factoring this out with numba doesn't seem to help.
+    # But we'll leave it as-is for profiling.
+    delta_energy = mmc_delta_energy(potential = potential.normalised_values,
+                                    pos_old = pos.coords,
+                                    pos_new = pos_new.coords)
 
     # Accept or reject the move based on the Metropolis criterion
-    if delta_energy <= 0 or np.random.rand() < np.exp(-delta_energy / temperature):
-        accepted = True
-    else:
-        accepted = False
+    accepted = mmc_accept(delta_energy=delta_energy, temperature=temperature)
 
     return move, accepted
+
+@numba.jit
+def mmc_accept(delta_energy: float, temperature: float) -> bool:
+    return delta_energy <= 0 or rand() < exp(-delta_energy / temperature)
+
+@numba.jit
+def mmc_delta_energy(potential: np.ndarray, pos_old: Tuple[float, float], pos_new: Tuple[float, float]):
+    return potential[int(pos_new[0]), int(pos_new[1])] - potential[int(pos_old[0]), int(pos_new[1])]
+
+@numba.jit
+def new_mmc_move(move_size: float) -> Tuple[float, float]:
+    return move_size * rand(2) - 0.5
