@@ -107,4 +107,4 @@ def mmc_delta_energy(
 
 @numba.jit
 def new_mmc_move(move_size: float) -> Tuple[float, float]:
-    return move_size * rand(2) - 0.5
+    return move_size * (rand(2) - 0.5)

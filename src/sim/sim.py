@@ -6,7 +6,7 @@ from src.config.sim_conf import sconf
 from src.sim.datatypes import entities, items, maps
 from src.sim.entities import ant
 from src.sim.items import food, pheremones
-from src.sim.maps import consumables_maps, entity_map, environment_maps
+from src.sim.maps import consumables_maps, environment_maps
 from src.sim.rules import stochastic
 
 
