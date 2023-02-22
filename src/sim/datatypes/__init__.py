@@ -4,6 +4,7 @@ import attr
 
 from src.config.sim_conf import sconf
 
+
 @attr.define
 class SimPos:
     x: float

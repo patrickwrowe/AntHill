@@ -20,7 +20,7 @@ class SimConf:
     # Settings for specific movement rules
     # Metropolis Monte-Carlo
     # *2 here for optimisation purposes
-    mmc_move_size: float = 0.5 * 2  
+    mmc_move_size: float = 0.5 * 2
     mmc_move_temp: float = 0.05
     mmc_max_attempts: int = 5
 

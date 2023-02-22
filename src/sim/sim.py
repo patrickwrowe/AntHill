@@ -6,8 +6,8 @@ from src.config.sim_conf import sconf
 from src.sim.datatypes import entities, items, maps
 from src.sim.entities import ant
 from src.sim.items import food, pheremones
+from src.sim.maps import consumables_maps, entity_map, environment_maps
 from src.sim.rules import stochastic
-from src.sim.maps import environment_maps, consumables_maps, entity_map
 
 
 @attrs.define
@@ -57,7 +57,6 @@ class BasicAntHillSim(AntHillSim):
         )
         sim_maps["TemperatureMap"] = environment_maps.TemperatureMap.new_map()
         sim_maps["AltitudeMap"] = environment_maps.AltitudeMap.new_map()
-        
 
         return cls(sim_entities=sim_entities, sim_items=sim_items, sim_maps=sim_maps)
 

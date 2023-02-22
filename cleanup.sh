@@ -1,2 +1,2 @@
-black ./*
-isort --profile black ./*
+black ./*py
+isort --profile black ./*py

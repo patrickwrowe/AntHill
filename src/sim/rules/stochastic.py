@@ -1,14 +1,15 @@
 from typing import List, Tuple
 
-import numpy as np
-from numpy.random import rand
-from numpy import exp
 import numba
+import numpy as np
+from numpy import exp
+from numpy.random import rand
 
 from src.config.sim_conf import sconf
 from src.sim.datatypes import SimPos, entities, maps
 
 _tmp_sim_pos = SimPos(0, 0)
+
 
 def brownian_motion(sim_entities: List[entities.Entity]) -> None:
     """Moves entities randomly, with no care for
@@ -43,7 +44,8 @@ def metropolis_monte_carlo(
 
             if accepted:
                 entity.pos.update_pos(move)
-        
+
+
 def metropolis_move(
     potential: maps.MapArray,
     pos: SimPos,
@@ -76,22 +78,32 @@ def metropolis_move(
     # Compute the change in potential energy
     # factoring this out with numba doesn't seem to help.
     # But we'll leave it as-is for profiling.
-    delta_energy = mmc_delta_energy(potential = potential.normalised_values,
-                                    pos_old = pos.coords,
-                                    pos_new = pos_new.coords)
+    delta_energy = mmc_delta_energy(
+        potential=potential.normalised_values,
+        pos_old=pos.coords,
+        pos_new=pos_new.coords,
+    )
 
     # Accept or reject the move based on the Metropolis criterion
     accepted = mmc_accept(delta_energy=delta_energy, temperature=temperature)
 
     return move, accepted
 
+
 @numba.jit
 def mmc_accept(delta_energy: float, temperature: float) -> bool:
     return delta_energy <= 0 or rand() < exp(-delta_energy / temperature)
 
+
 @numba.jit
-def mmc_delta_energy(potential: np.ndarray, pos_old: Tuple[float, float], pos_new: Tuple[float, float]):
-    return potential[int(pos_new[0]), int(pos_new[1])] - potential[int(pos_old[0]), int(pos_new[1])]
+def mmc_delta_energy(
+    potential: np.ndarray, pos_old: Tuple[float, float], pos_new: Tuple[float, float]
+):
+    return (
+        potential[int(pos_new[0]), int(pos_new[1])]
+        - potential[int(pos_old[0]), int(pos_new[1])]
+    )
+
 
 @numba.jit
 def new_mmc_move(move_size: float) -> Tuple[float, float]:

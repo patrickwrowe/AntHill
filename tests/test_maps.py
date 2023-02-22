@@ -2,7 +2,7 @@ import numpy as np
 import pytest
 
 from src.config.sim_conf import sconf
-from src.sim.datatypes import SimPos, items, entities
+from src.sim.datatypes import SimPos, entities, items
 from src.sim.datatypes.maps import MapArray
 from src.sim.maps.consumables_maps import ConsumableMap
 from src.sim.maps.environment_maps import AltitudeMap
@@ -85,14 +85,25 @@ def test_new_map():
     )
 
     # check withdrawing from the consumable map
-    entity_list = [entities.Entity(pos=SimPos(10, 10),
-                                   consumables={items.Consumable: items.Consumable(pos=SimPos(x=0, y=0), supply=11)}),
-                    entities.Entity(pos=SimPos(15, 15),
-                                    consumables={items.Consumable: items.Consumable(pos=SimPos(x=0, y=0), supply=10)})
-                   ]
+    entity_list = [
+        entities.Entity(
+            pos=SimPos(10, 10),
+            consumables={
+                items.Consumable: items.Consumable(pos=SimPos(x=0, y=0), supply=11)
+            },
+        ),
+        entities.Entity(
+            pos=SimPos(15, 15),
+            consumables={
+                items.Consumable: items.Consumable(pos=SimPos(x=0, y=0), supply=10)
+            },
+        ),
+    ]
 
     # Test withdrawing one from each entity
-    withdrawn_map = map_array.withdraw_from_entities(withdraw_entities=entity_list, value=1.0)
+    withdrawn_map = map_array.withdraw_from_entities(
+        withdraw_entities=entity_list, value=1.0
+    )
     assert withdrawn_map.sum() == 2.0
     assert entity_list[0].consumables[items.Consumable].supply == 10.0
     assert entity_list[1].consumables[items.Consumable].supply == 9.0
@@ -100,33 +111,51 @@ def test_new_map():
     assert map_array.values[int(entity_list[0].pos.x)][int(entity_list[0].pos.y)] == 1.0
     assert map_array.values[int(entity_list[1].pos.x)][int(entity_list[1].pos.y)] == 1.0
 
-
     # Test withdrawing the remaining 9 from one
-    withdrawn_map = map_array.withdraw_from_entities(withdraw_entities=entity_list, value=9.0)
+    withdrawn_map = map_array.withdraw_from_entities(
+        withdraw_entities=entity_list, value=9.0
+    )
     assert withdrawn_map.sum() == 18.0
     assert entity_list[0].consumables[items.Consumable].supply == 1.0
     assert entity_list[1].consumables[items.Consumable].supply == 0.0
     assert map_array.values.sum() == 20.0
-    assert map_array.values[int(entity_list[0].pos.x)][int(entity_list[0].pos.y)] == 10.0
-    assert map_array.values[int(entity_list[1].pos.x)][int(entity_list[1].pos.y)] == 10.0
+    assert (
+        map_array.values[int(entity_list[0].pos.x)][int(entity_list[0].pos.y)] == 10.0
+    )
+    assert (
+        map_array.values[int(entity_list[1].pos.x)][int(entity_list[1].pos.y)] == 10.0
+    )
 
     # Test withdrawing the remaining one more
-    withdrawn_map = map_array.withdraw_from_entities(withdraw_entities=entity_list, value=1.0)
+    withdrawn_map = map_array.withdraw_from_entities(
+        withdraw_entities=entity_list, value=1.0
+    )
     assert withdrawn_map.sum() == 1.0
     assert entity_list[0].consumables[items.Consumable].supply == 0.0
     assert entity_list[1].consumables[items.Consumable].supply == 0.0
     assert map_array.values.sum() == 21.0
-    assert map_array.values[int(entity_list[0].pos.x)][int(entity_list[0].pos.y)] == 11.0
-    assert map_array.values[int(entity_list[1].pos.x)][int(entity_list[1].pos.y)] == 10.0
+    assert (
+        map_array.values[int(entity_list[0].pos.x)][int(entity_list[0].pos.y)] == 11.0
+    )
+    assert (
+        map_array.values[int(entity_list[1].pos.x)][int(entity_list[1].pos.y)] == 10.0
+    )
 
     # Test withdrawing the remaining one more
-    withdrawn_map = map_array.withdraw_from_entities(withdraw_entities=entity_list, value=1.0)
+    withdrawn_map = map_array.withdraw_from_entities(
+        withdraw_entities=entity_list, value=1.0
+    )
     assert withdrawn_map.sum() == 0.0
     assert entity_list[0].consumables[items.Consumable].supply == 0.0
     assert entity_list[1].consumables[items.Consumable].supply == 0.0
     assert map_array.values.sum() == 21.0
-    assert map_array.values[int(entity_list[0].pos.x)][int(entity_list[0].pos.y)] == 11.0
-    assert map_array.values[int(entity_list[1].pos.x)][int(entity_list[1].pos.y)] == 10.0
+    assert (
+        map_array.values[int(entity_list[0].pos.x)][int(entity_list[0].pos.y)] == 11.0
+    )
+    assert (
+        map_array.values[int(entity_list[1].pos.x)][int(entity_list[1].pos.y)] == 10.0
+    )
+
 
 @pytest.fixture
 def altitude_map():

@@ -1,9 +1,11 @@
 from __future__ import annotations
 
+from typing import Dict, Optional, Type
+
 import attrs
 
 from src.sim.datatypes import SimPos, items
-from typing import Dict, Type, Optional
+
 
 @attrs.define
 class Entity:

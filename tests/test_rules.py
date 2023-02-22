@@ -6,9 +6,9 @@ from src.sim.datatypes import SimPos
 from src.sim.datatypes.entities import Entity
 from src.sim.datatypes.maps import MapArray
 from src.sim.rules.stochastic import (
+    brownian_motion,
     metropolis_monte_carlo,
     metropolis_move,
-    brownian_motion
 )
 
 

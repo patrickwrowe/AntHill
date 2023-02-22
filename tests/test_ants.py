@@ -3,11 +3,7 @@ import pytest
 from src.config.sim_conf import sconf
 from src.sim.datatypes import SimPos
 from src.sim.entities import ant
-from src.sim.items.pheremones import (
-    AntLocationPheremone,
-    FoundFoodPheremone,
-    Pheremone,
-)
+from src.sim.items.pheremones import AntLocationPheremone, FoundFoodPheremone, Pheremone
 from tests import test_utils
 
 
@@ -46,7 +42,10 @@ def test_ant_pheremones():
     new_ant = ant.Ant.basic_ant()
 
     # Check pheremone levels
-    assert new_ant.consumables[AntLocationPheremone].location.supply == sconf.init_location_pheremone_level
+    assert (
+        new_ant.consumables[AntLocationPheremone].location.supply
+        == sconf.init_location_pheremone_level
+    )
     assert (
         new_ant.consumables[FoundFoodPheremone].supply
         == sconf.init_found_food_pheremone_level
@@ -102,7 +101,10 @@ def test_ant_pheremones():
     new_ant = ant.Ant.basic_ant()
 
     # Test that the Ant's pheremones start at the initial levels
-    assert new_ant.consumables[AntLocationPheremone].supply == sconf.init_location_pheremone_level
+    assert (
+        new_ant.consumables[AntLocationPheremone].supply
+        == sconf.init_location_pheremone_level
+    )
     assert (
         new_ant.consumables[FoundFoodPheremone].supply
         == sconf.init_found_food_pheremone_level

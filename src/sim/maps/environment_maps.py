@@ -65,7 +65,7 @@ class AltitudeMap(maps.MapArray):
 
             # The "noise" library is using C and wants you to check on a per-sample
             # Basis. Use np.vectorize to get a version of the function which
-            # lets you pass numpy arrays instead of sets of floats.
+            # lets you pass numpy arrays instead of sets of floats.
             noise_arr += np.vectorize(pnoise2)(scaled_y, scaled_x).T * octave_factor
 
         return noise_arr
