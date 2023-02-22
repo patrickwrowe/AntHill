@@ -33,17 +33,3 @@ class FoundFoodPheremone(Pheremone):
         return super().new_pheremone(
             pos=pos, supply=sconf.init_found_food_pheremone_level
         )
-
-
-@attrs.define
-class AntPheremones:
-    pos: SimPos
-    location: AntLocationPheremone
-    found_food: FoundFoodPheremone
-
-    @classmethod
-    def for_ant(cls, pos: SimPos):
-        location = AntLocationPheremone.new_pheremone(pos=pos)
-        found_food = FoundFoodPheremone.new_pheremone(pos=pos)
-
-        return cls(pos=pos, location=location, found_food=found_food)

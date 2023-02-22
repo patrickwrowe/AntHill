@@ -8,11 +8,11 @@ from src.sim.datatypes.maps import MapArray
 from src.sim.rules.stochastic import (
     metropolis_monte_carlo,
     metropolis_move,
-    random_move,
+    brownian_motion
 )
 
 
-def test_random_move():
+def test_brownian_motion():
     # Set up entities for testing
     entity1 = Entity(pos=SimPos(0, 0))
     entity2 = Entity(pos=SimPos(1, 1))
@@ -21,7 +21,7 @@ def test_random_move():
 
     # Test that entities are moved randomly
     np.random.seed(0)
-    random_move(entities)
+    brownian_motion(entities)
     assert entity1.pos != SimPos(0, 0)
     assert entity2.pos != SimPos(1, 1)
     assert entity3.pos != SimPos(-1, -1)
@@ -62,7 +62,7 @@ def test_metropolis_move():
     test_pos = SimPos(center_x, center_y)
     for i in range(10):
         move, accepted = metropolis_move(
-            test_potential, test_pos, temperature=0.0, move_size=1
+            test_potential, test_pos, temperature=1e-10, move_size=1
         )
         assert np.all(np.array(move) < 1)
 
