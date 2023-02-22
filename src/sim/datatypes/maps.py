@@ -21,7 +21,7 @@ class MapArray:
         raise NotImplementedError()
 
     @functools.cached_property
-    def normalised_values(self):
+    def normalised_values(self) -> np.ndarray:
         # Scale the noise array to be between 0 and 1
 
         values = (self.values - np.min(self.values)) / (

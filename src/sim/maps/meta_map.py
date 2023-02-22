@@ -22,9 +22,9 @@ class MetaMap(maps.MapArray):
     def new_map(cls, sub_maps: List[maps.MapArray], coefficients: List[float]) -> MetaMap:
 
         MetaMap.validate_submaps(sub_maps=sub_maps, coefficients=coefficients)
-        values = MetaMap.compose_submaps(sub_maps=sub_maps, coefficients=coefficients)
+        values = MetaMap._compose_submaps(sub_maps=sub_maps, coefficients=coefficients)
 
-        return cls(values = values, sub_maps = maps, coefficients=coefficients)
+        return cls(values = values, sub_maps = sub_maps, coefficients=coefficients)
 
     @staticmethod
     def validate_submaps(sub_maps: List[maps.MapArray], coefficients: List[float]) -> None:
@@ -35,20 +35,20 @@ class MetaMap(maps.MapArray):
         assert len(coefficients) == len(sub_maps)
 
     @staticmethod
-    def compose_submaps(sub_maps: List[maps.MapArray], coefficients: List[float]):
+    def _compose_submaps(sub_maps: List[maps.MapArray], coefficients: List[float]):
         
         values = np.zeros(sub_maps[0].values.shape)
 
-        for coefficient, sub_map in zip(sub_maps, coefficients):
+        for sub_map, coefficient in zip(sub_maps, coefficients):
             values += coefficient * sub_map.values
         
         return values
 
     def recompose_submaps(self):
-        self.values = MetaMap.compose_submaps(sub_maps = self.sub_maps, coefficients = self.coefficients)
+        self.values = MetaMap._compose_submaps(sub_maps = self.sub_maps, coefficients = self.coefficients)
 
     # Make sure to recompose submaps before returning values.
-    @functools.cached_property
+    @property
     def normalised_values(self):
-        self.recompose_submaps
+        self.recompose_submaps()
         return super().normalised_values
