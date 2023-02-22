@@ -46,9 +46,3 @@ class MetaMap(maps.MapArray):
 
     def recompose_submaps(self):
         self.values = MetaMap._compose_submaps(sub_maps = self.sub_maps, coefficients = self.coefficients)
-
-    # Make sure to recompose submaps before returning values.
-    @property
-    def normalised_values(self):
-        self.recompose_submaps()
-        return super().normalised_values
