@@ -45,7 +45,10 @@ class Artist:
 
         # draw dat map
         self.draw_map(screen=screen, map=simulation.sim_maps[AltitudeMap])
-        self.draw_map(screen=screen, map=simulation.sim_maps[AntLocationPheremone], colormap='autumn', show_zero=False)
+        self.draw_map(screen=screen, map=simulation.sim_maps[AntLocationPheremone], 
+                        colormap='autumn', show_zero=False, alpha=100)
+
+        # self.draw_map(screen=screen, map=simulation.meta_maps["AltitudeAntLocation"], colormap='autumn')
 
         # Draw items
         self.draw_items(screen=screen, items=simulation.sim_items)
@@ -92,7 +95,7 @@ class Artist:
 
     def draw_map(
         self, screen: pygame.Surface, map: MapArray, colormap: str = "terrain", show_zero: bool = True,
-    ) -> None:
+    alpha: int = None) -> None:
         """
         This function takes a Pygame screen and a MapArray object, and
         draws the map represented by the MapArray on the screen
@@ -127,6 +130,8 @@ class Artist:
 
         if not show_zero:
             terrain_surface.set_colorkey(terrain[0])
+        
+        terrain_surface.set_alpha(alpha)
 
         # Blit the terrain surface onto the screen
         screen.blit(terrain_surface, (0, 0))
