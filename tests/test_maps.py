@@ -64,17 +64,18 @@ def test_normalised_values():
     # Test that the values are correctly normalised
     assert np.allclose(norm_values, np.array([[0.5, 0.2], [1, 0]]))
 
+
 def test_meta_map():
-    map_a = MapArray(values = np.ones((10, 10)))
-    map_b = MapArray(values = np.ones((10, 10)))
+    map_a = MapArray(values=np.ones((10, 10)))
+    map_b = MapArray(values=np.ones((10, 10)))
 
     # Super basic, check tha 1 + 1 = 2
-    meta_map = MetaMap.new_map([map_a, map_b], [1., 1.])
+    meta_map = MetaMap.new_map([map_a, map_b], [1.0, 1.0])
     assert (meta_map.values == 2).all()
     assert (meta_map.normalised_values == 0).all()
     assert (map_a.values == 1).all()
     assert (map_b.values == 1).all()
-    
+
     # Check submap recomposition
     map_a.values = map_a.values + 10
     assert (meta_map.values == 2).all()
@@ -82,19 +83,19 @@ def test_meta_map():
     assert (meta_map.values == 12).all()
 
     # Check coefficents
-    map_a = MapArray(values = np.ones((10, 10)))
-    map_b = MapArray(values = np.ones((10, 10)))
-    map_c = MapArray(values = 10 * np.ones((10, 10)))
+    map_a = MapArray(values=np.ones((10, 10)))
+    map_b = MapArray(values=np.ones((10, 10)))
+    map_c = MapArray(values=10 * np.ones((10, 10)))
 
-    meta_map = MetaMap.new_map([map_a, map_b], [10., 1.])
-    meta_map_b = MetaMap.new_map([map_c, map_b], [1., 1.])
+    meta_map = MetaMap.new_map([map_a, map_b], [10.0, 1.0])
+    meta_map_b = MetaMap.new_map([map_c, map_b], [1.0, 1.0])
 
     assert (meta_map.values == meta_map_b.values).all()
 
     # check normalised values
-    map_a = MapArray(values = np.random.rand(10, 10))
-    map_b = MapArray(values = np.random.rand(10, 10))
-    meta_map = MetaMap.new_map([map_a, map_b], [10., 1.])
+    map_a = MapArray(values=np.random.rand(10, 10))
+    map_b = MapArray(values=np.random.rand(10, 10))
+    meta_map = MetaMap.new_map([map_a, map_b], [10.0, 1.0])
     assert (0 <= meta_map.normalised_values).all()
     assert (meta_map.normalised_values <= 1).all()
 

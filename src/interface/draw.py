@@ -1,4 +1,4 @@
-from typing import List, Dict, Type
+from typing import Dict, List, Type
 
 import attrs
 import matplotlib.pyplot as plt
@@ -9,9 +9,10 @@ from src.setup import PGSetup
 from src.sim.datatypes.entities import Entity
 from src.sim.datatypes.items import Item
 from src.sim.datatypes.maps import MapArray
-from src.sim.maps.environment_maps import AltitudeMap
 from src.sim.items.pheremones import AntLocationPheremone
+from src.sim.maps.environment_maps import AltitudeMap
 from src.sim.sim import AntHillSim
+
 
 @attrs.define
 class Artist:
@@ -45,8 +46,13 @@ class Artist:
 
         # draw dat map
         self.draw_map(screen=screen, map=simulation.sim_maps[AltitudeMap])
-        self.draw_map(screen=screen, map=simulation.sim_maps[AntLocationPheremone], 
-                        colormap='autumn', show_zero=False, alpha=100)
+        self.draw_map(
+            screen=screen,
+            map=simulation.sim_maps[AntLocationPheremone],
+            colormap="autumn",
+            show_zero=False,
+            alpha=100,
+        )
 
         # self.draw_map(screen=screen, map=simulation.meta_maps["AltitudeAntLocation"], colormap='autumn')
 
@@ -94,8 +100,13 @@ class Artist:
             pygame.draw.circle(screen, (200, 50, 0), item.pos.coords, radius=3)
 
     def draw_map(
-        self, screen: pygame.Surface, map: MapArray, colormap: str = "terrain", show_zero: bool = True,
-    alpha: int = None) -> None:
+        self,
+        screen: pygame.Surface,
+        map: MapArray,
+        colormap: str = "terrain",
+        show_zero: bool = True,
+        alpha: int = None,
+    ) -> None:
         """
         This function takes a Pygame screen and a MapArray object, and
         draws the map represented by the MapArray on the screen
@@ -126,11 +137,11 @@ class Artist:
         terrain_surface = pygame.surfarray.make_surface(terrain_image)
 
         # Scale the terrain surface to fit the screen
-        # terrain_surface = pygame.transform.scale(terrain_surface, screen.get_size())
+        # terrain_surface = pygame.transform.scale(terrain_surface, screen.get_size())
 
         if not show_zero:
             terrain_surface.set_colorkey(terrain[0])
-        
+
         terrain_surface.set_alpha(alpha)
 
         # Blit the terrain surface onto the screen

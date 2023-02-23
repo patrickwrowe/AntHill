@@ -3,8 +3,9 @@ from __future__ import annotations
 import functools
 
 import attrs
-import numpy as np
 import numba
+import numpy as np
+
 
 @attrs.define(slots=False)
 class MapArray:

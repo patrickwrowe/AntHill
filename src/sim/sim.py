@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import List, Dict, Type
+from typing import Dict, List, Type
 
 import attrs
 
@@ -34,7 +34,6 @@ class AntHillSim:
 
 @attrs.define
 class BasicAntHillSim(AntHillSim):
-    
     @classmethod
     def new_sim(cls):
         """Initialise a new simulation"""
@@ -102,8 +101,12 @@ class BasicAntHillSim(AntHillSim):
                 sim_map.recompose_submaps()
 
         if self.num_updates % sconf.withdraw_pheremones_every == 0:
-            self.sim_maps[pheremones.AntLocationPheremone].withdraw_from_entities(self.sim_entities, value=sconf.pheremone_withdraw_quant)
-            self.sim_maps[pheremones.FoundFoodPheremone].withdraw_from_entities(self.sim_entities, value=sconf.pheremone_withdraw_quant)
+            self.sim_maps[pheremones.AntLocationPheremone].withdraw_from_entities(
+                self.sim_entities, value=sconf.pheremone_withdraw_quant
+            )
+            self.sim_maps[pheremones.FoundFoodPheremone].withdraw_from_entities(
+                self.sim_entities, value=sconf.pheremone_withdraw_quant
+            )
 
         if sconf.brownian_motion == True:
             stochastic.brownian_motion(self.sim_entities)

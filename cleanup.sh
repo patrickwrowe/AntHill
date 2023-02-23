@@ -1,2 +1,2 @@
-black ./*py
-isort --profile black ./*py
+find . -name "*.py" | xargs black
+find . -name "*.py" | xargs isort --profile black

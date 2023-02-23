@@ -65,7 +65,7 @@ class AntHill:
                 self.artist.draw_frame(
                     screen=self.pg_setup.screen,
                     clock=self.pg_setup.clock,
-                    simulation = simulation
+                    simulation=simulation,
                 )
 
             # Control the frame rate
