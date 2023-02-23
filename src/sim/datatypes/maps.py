@@ -4,7 +4,7 @@ import functools
 
 import attrs
 import numpy as np
-
+import numba
 
 @attrs.define(slots=False)
 class MapArray:
@@ -20,7 +20,10 @@ class MapArray:
     def new_map(cls) -> MapArray:
         raise NotImplementedError()
 
-    @functools.cached_property
+    # It would be great to find some way to cache this and then update it...
+    # Doing so gains 20 fps...
+    # @functools.lru_cache
+    @property
     def normalised_values(self) -> np.ndarray:
         # Scale the noise array to be between 0 and 1
 
@@ -28,5 +31,4 @@ class MapArray:
             np.max(self.values) - np.min(self.values)
         )
         values = np.nan_to_num(values, 0)
-
         return values

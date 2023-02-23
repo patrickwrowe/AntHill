@@ -26,7 +26,9 @@ class SimConf:
 
     # Pheremone Settings
     init_found_food_pheremone_level: float = 0.0
-    init_location_pheremone_level: float = 1.0
+    init_location_pheremone_level: float = 10.0
+    withdraw_pheremones_every: int = 100
+    pheremone_withdraw_quant: float = 0.01
 
     # Food Settings
     max_basic_food_supply: float = 1.0
@@ -35,6 +37,9 @@ class SimConf:
     # Default map resolution
     default_map_resolution_x = sim_x
     default_map_resolution_y = sim_y
+
+    # misc maps
+    recompose_submaps_every: int = 100
 
     # Environmental Variables
     init_temp: int = 298

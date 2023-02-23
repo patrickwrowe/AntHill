@@ -36,7 +36,7 @@ class ConsumableMap(maps.MapArray):
 
         # first withdraw the correct amount from each entity
         for entity in withdraw_entities:
-            withdrawn.append(entity.consumables[type(self.consumable)].withdraw(value))
+            withdrawn.append(entity.consumables[self.consumable].withdraw(value))
             positions.append(entity.pos.coords)
 
         positions = np.array(positions)

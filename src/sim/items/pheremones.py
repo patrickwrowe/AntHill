@@ -17,7 +17,11 @@ class Pheremone(items.Consumable):
 class AntLocationPheremone(Pheremone):
     """ants leave pheremones where they have been."""
 
-    ...
+    @classmethod
+    def new_pheremone(cls, pos: SimPos):
+        return super().new_pheremone(
+            pos=pos, supply=sconf.init_location_pheremone_level
+        )
 
 
 @attrs.define

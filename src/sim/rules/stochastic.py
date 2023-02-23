@@ -79,7 +79,7 @@ def metropolis_move(
     # factoring this out with numba doesn't seem to help.
     # But we'll leave it as-is for profiling.
     delta_energy = mmc_delta_energy(
-        potential=potential.normalised_values,
+        potential=potential.values,
         pos_old=pos.coords,
         pos_new=pos_new.coords,
     )

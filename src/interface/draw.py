@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Dict, Type
 
 import attrs
 import matplotlib.pyplot as plt
@@ -9,7 +9,9 @@ from src.setup import PGSetup
 from src.sim.datatypes.entities import Entity
 from src.sim.datatypes.items import Item
 from src.sim.datatypes.maps import MapArray
-
+from src.sim.maps.environment_maps import AltitudeMap
+from src.sim.items.pheremones import AntLocationPheremone
+from src.sim.sim import AntHillSim
 
 @attrs.define
 class Artist:
@@ -24,9 +26,7 @@ class Artist:
         self,
         screen: pygame.Surface,
         clock: pygame.time.Clock,
-        entities: List[Entity],
-        items: List[Item],
-        map=MapArray,
+        simulation: AntHillSim,
     ):
         """
         Draws a single frame of the simulation.
@@ -34,7 +34,7 @@ class Artist:
         Args:
             screen (pygame.Surface): The pygame screen surface to draw on.
             entities (List[Entity]): The list of entities to draw.
-            map (MapArray): The map to be drawn.
+            map Dict(MapArray): The maps.
 
         Returns:
             None
@@ -44,13 +44,14 @@ class Artist:
         screen.fill((255, 255, 255))
 
         # draw dat map
-        self.draw_map(screen=screen, map=map)
+        self.draw_map(screen=screen, map=simulation.sim_maps[AltitudeMap])
+        self.draw_map(screen=screen, map=simulation.sim_maps[AntLocationPheremone], colormap='autumn', show_zero=False)
 
         # Draw items
-        self.draw_items(screen=screen, items=items)
+        self.draw_items(screen=screen, items=simulation.sim_items)
 
         # Draw dem ants
-        self.draw_entities(screen=screen, entities=entities)
+        self.draw_entities(screen=screen, entities=simulation.sim_entities)
 
         # Draw fps
         # Disabled as text doesn't seem to work...
@@ -90,7 +91,7 @@ class Artist:
             pygame.draw.circle(screen, (200, 50, 0), item.pos.coords, radius=3)
 
     def draw_map(
-        self, screen: pygame.Surface, map: MapArray, colormap: str = "terrain"
+        self, screen: pygame.Surface, map: MapArray, colormap: str = "terrain", show_zero: bool = True,
     ) -> None:
         """
         This function takes a Pygame screen and a MapArray object, and
@@ -122,7 +123,10 @@ class Artist:
         terrain_surface = pygame.surfarray.make_surface(terrain_image)
 
         # Scale the terrain surface to fit the screen
-        # terrain_surface = pygame.transform.scale(terrain_surface, screen.get_size())
+        # terrain_surface = pygame.transform.scale(terrain_surface, screen.get_size())
+
+        if not show_zero:
+            terrain_surface.set_colorkey(terrain[0])
 
         # Blit the terrain surface onto the screen
         screen.blit(terrain_surface, (0, 0))

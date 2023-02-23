@@ -59,15 +59,13 @@ class AntHill:
                     )
 
             # Update game state
-            entities, items, map = self.simulation.update_sim()
+            simulation = self.simulation.update_sim()
 
             if main_ticks % gconf.draw_frame_every == 0:
                 self.artist.draw_frame(
                     screen=self.pg_setup.screen,
                     clock=self.pg_setup.clock,
-                    entities=entities,
-                    items=items,
-                    map=map,
+                    simulation = simulation
                 )
 
             # Control the frame rate
