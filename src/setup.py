@@ -45,7 +45,7 @@ class PGSetup:
             pygame.image.load(os.path.join(images_dir, image_file)).convert_alpha()
             for image_file in all_image_files
         ]
-        all_images = [pygame.transform.scale(image, (10, 10)) for image in all_images]
+        all_images = [pygame.transform.scale(image, (20, 20)) for image in all_images]
 
         return all_images
 

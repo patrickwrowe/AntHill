@@ -67,7 +67,13 @@ def metropolis_move(
     """
 
     # Generate a random displacement vector
-    move = new_mmc_move(move_size=move_size)
+    move = np.array(new_mmc_move(move_size=move_size))
+
+    # Something like this produces more coherent motion
+    # But is very expensive and probably breaks the metropolis
+    # criterion.
+    # move = np.array(pos.vec) + move
+    # move = sconf.mmc_move_size * move / np.linalg.norm(move)
 
     # Compute the new position
     # Generate a new SimPos object to see if the move would be accepted
