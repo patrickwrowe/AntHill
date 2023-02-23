@@ -1,10 +1,10 @@
 from typing import Tuple
 
 import attr
+import numba
 
 from src.config.sim_conf import sconf
 
-import numba
 
 @attr.define
 class SimPos:
@@ -18,10 +18,19 @@ class SimPos:
         return (self.x, self.y)
 
     def update_pos(self, vec: Tuple[float, float]) -> None:
-        self.x, self.y, self.vec = _update_pos(x = self.x, y = self.y, vec = vec, boundary_x=sconf.default_map_resolution_x, boundary_y=sconf.default_map_resolution_y)
+        self.x, self.y, self.vec = _update_pos(
+            x=self.x,
+            y=self.y,
+            vec=vec,
+            boundary_x=sconf.default_map_resolution_x,
+            boundary_y=sconf.default_map_resolution_y,
+        )
+
 
 @numba.jit
-def _update_pos(x: float, y: float, vec: Tuple[float, float], boundary_x: int, boundary_y: int) -> Tuple[float, float]:
+def _update_pos(
+    x: float, y: float, vec: Tuple[float, float], boundary_x: int, boundary_y: int
+) -> Tuple[float, float]:
     """Update the position and the direction vector based on the move."""
 
     old_x, old_y = x, y
@@ -31,10 +40,9 @@ def _update_pos(x: float, y: float, vec: Tuple[float, float], boundary_x: int, b
 
     return x, y, vec
 
+
 @numba.jit
-def _update_coord(
-    val: float, step: float, boundary: int
-) -> Tuple[float, bool]:
+def _update_coord(val: float, step: float, boundary: int) -> Tuple[float, bool]:
     """Update the coordinates with some vector"""
 
     boundary -= 1
