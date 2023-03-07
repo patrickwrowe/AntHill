@@ -12,6 +12,9 @@ class SimConf:
     sim_x: int = 800
     sim_y: int = 600
 
+    # Basic parameters
+    item_collect_dist = 5
+
     # Types of simulation moves to make when
     # Updating the simulation state
     brownian_motion: bool = False
@@ -33,6 +36,10 @@ class SimConf:
     # Food Settings
     max_basic_food_supply: float = 1.0
     min_basic_food_supply: float = 0.1
+    
+    # item settings
+    withdraw_items_every: int = 100
+    item_withdraw_quant: float = 0.01
 
     # Default map resolution
     default_map_resolution_x = sim_x

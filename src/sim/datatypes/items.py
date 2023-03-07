@@ -32,9 +32,9 @@ class Consumable(Item):
         # If there's only a small amount left,
         # Withdraw what can be withdrawn
         elif quant > self.supply:
-            residal = self.supply
+            residual = self.supply
             self.supply = 0.0
-            return residal
+            return residual
         # Else, withdraw everything
         else:
             self.supply -= quant

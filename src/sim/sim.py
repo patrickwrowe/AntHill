@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Dict, List, Type
+from typing import Dict, List, Type, Protocol
 
 import attrs
 
@@ -13,7 +13,7 @@ from src.sim.rules import stochastic
 
 
 @attrs.define
-class AntHillSim:
+class AntHillSim(Protocol):
     """Main class for handling anthill simulation"""
 
     sim_entities: List[entities.Entity]
@@ -92,14 +92,17 @@ class BasicAntHillSim(AntHillSim):
         )
 
     def update_sim(self) -> BasicAntHillSim:
-        """Update the simulation"""
+        """Update the simulation, return the current state
+        for visualisation."""
 
         self.num_updates += 1
 
+        # If necessary, update submaps (potential)
         if self.num_updates % sconf.recompose_submaps_every == 0:
-            for mapname, sim_map in self.meta_maps.items():
+            for _, sim_map in self.meta_maps.items():
                 sim_map.recompose_submaps()
 
+        # if necessary, withdraw pheremones from ants
         if self.num_updates % sconf.withdraw_pheremones_every == 0:
             self.sim_maps[pheremones.AntLocationPheremone].withdraw_from_entities(
                 self.sim_entities, value=sconf.pheremone_withdraw_quant
@@ -108,6 +111,12 @@ class BasicAntHillSim(AntHillSim):
                 self.sim_entities, value=sconf.pheremone_withdraw_quant
             )
 
+        # Withdraw items like food into ants
+        if self.num_updates % sconf.withdraw_items_every:
+            for entity in self.sim_entities:
+                entity.withdraw_from_consumables(consumables=self.sim_items, value=sconf.item_withdraw_quant)
+
+        # move the ants according to some physical laws.
         if sconf.brownian_motion == True:
             stochastic.brownian_motion(self.sim_entities)
         if sconf.mmc_move == True:

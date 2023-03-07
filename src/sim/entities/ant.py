@@ -11,7 +11,7 @@ from src.sim.items import food, pheremones
 
 @attrs.define
 class Ant(entities.Entity):
-    consumables: Dict[Type[items.Consumable], items.Consumable]
+    consumables: Dict[items.Consumable, items.Consumable]
 
     @classmethod
     def basic_ant(cls) -> Ant:
@@ -27,6 +27,9 @@ class Ant(entities.Entity):
             pheremones.FoundFoodPheremone: pheremones.FoundFoodPheremone.new_pheremone(
                 pos=init_pos
             ),
+
+            # Initialise an empty supply of food
+            food.BasicAntFood: food.BasicAntFood(pos=init_pos, supply=0.0)
         }
 
         return cls(pos=init_pos, consumables=init_consumables)

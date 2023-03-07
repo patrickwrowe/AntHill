@@ -8,6 +8,7 @@ ToDo List:
 1. Allow ant pheremones to be deposited onto pheremone MapArray
 2. Compose multiple MapArrays into one array to be used as a potential in MMC algorithm
 3. Enable ants to withdraw/deposit food. -> Implement "home" or "storage cache" for depositing. 
+4. Set item-specific quantities to be withdrawn/deposited by default.
 
 Nice To Have List:
 1. Enable printing of relevant information about tile/square by mouse click.
