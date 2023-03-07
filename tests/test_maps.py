@@ -102,7 +102,7 @@ def test_meta_map():
 
 def test_consumable_map():
     consumable = items.Consumable(pos=SimPos(x=0, y=0), supply=10)
-    map_array = ConsumableMap.new_map(consumable)
+    map_array = ConsumableMap.new_map(items.Consumable)
 
     # Check that the map has the expected shape and type
     assert isinstance(map_array, MapArray)
@@ -112,7 +112,7 @@ def test_consumable_map():
     )
 
     # Check that the consumable attribute is set correctly
-    assert map_array.consumable == consumable
+    assert map_array.consumable == items.Consumable
 
     # Check that all values in the map are zero
     assert np.allclose(
