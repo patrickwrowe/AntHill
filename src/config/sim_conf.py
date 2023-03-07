@@ -36,7 +36,7 @@ class SimConf:
     # Food Settings
     max_basic_food_supply: float = 1.0
     min_basic_food_supply: float = 0.1
-    
+
     # item settings
     withdraw_items_every: int = 100
     item_withdraw_quant: float = 0.01

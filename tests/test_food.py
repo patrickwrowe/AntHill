@@ -3,8 +3,8 @@ import pytest
 
 from src.config.sim_conf import sconf
 from src.sim.datatypes import SimPos
-from src.sim.items import food
 from src.sim.entities import ant
+from src.sim.items import food
 from tests import test_utils
 
 
@@ -29,6 +29,7 @@ def test_basic_food():
     # We should just get what's left over
     withdrawn = new_food.withdraw(0.5 / norm_fact)
     assert np.isclose(withdrawn, 0.4 / norm_fact)
+
 
 def test_withdraw_from_food_item():
     new_food = food.BasicAntFood(pos=SimPos(0, 0), supply=2.5)

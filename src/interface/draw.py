@@ -83,7 +83,7 @@ class Artist:
 
         for entity in entities:
             pygame.draw.circle(screen, (0, 0, 0), entity.pos.coords, radius=1)
-            # screen.blit(self.images[0], np.array(entity.pos.coords) - [10, 10])
+            # screen.blit(self.images[0], np.array(entity.pos.coords) - [10, 10])
 
     def draw_items(self, screen: pygame.Surface, items: List[Item]):
         """

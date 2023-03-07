@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Dict, List, Type, Protocol
+from typing import Dict, List, Protocol, Type
 
 import attrs
 
@@ -114,7 +114,9 @@ class BasicAntHillSim(AntHillSim):
         # Withdraw items like food into ants
         if self.num_updates % sconf.withdraw_items_every:
             for entity in self.sim_entities:
-                entity.withdraw_from_consumables(consumables=self.sim_items, value=sconf.item_withdraw_quant)
+                entity.withdraw_from_consumables(
+                    consumables=self.sim_items, value=sconf.item_withdraw_quant
+                )
 
         # move the ants according to some physical laws.
         if sconf.brownian_motion == True:

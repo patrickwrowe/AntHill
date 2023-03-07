@@ -27,9 +27,8 @@ class Ant(entities.Entity):
             pheremones.FoundFoodPheremone: pheremones.FoundFoodPheremone.new_pheremone(
                 pos=init_pos
             ),
-
             # Initialise an empty supply of food
-            food.BasicAntFood: food.BasicAntFood(pos=init_pos, supply=0.0)
+            food.BasicAntFood: food.BasicAntFood(pos=init_pos, supply=0.0),
         }
 
         return cls(pos=init_pos, consumables=init_consumables)
