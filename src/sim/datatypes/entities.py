@@ -19,6 +19,7 @@ class Entity:
     def withdraw_from_consumables(
         self,
         consumables: List[items.Consumable],
+        consumables_positions: np.ndarray,
         value: float = sconf.item_withdraw_quant,
         min_dist: float = sconf.item_collect_dist,
     ) -> None:
@@ -34,11 +35,6 @@ class Entity:
             None
         """
 
-        # can we speed this up? We could provide the threshold in units of distance**2
-        # And then only compute the square of the distance maybe?
-        consumables_positions = np.array(
-            [consumable.pos.coords for consumable in consumables]
-        )
         boolean_distances = (
             np.linalg.norm(self.pos.coords - consumables_positions, axis=1) < min_dist
         )

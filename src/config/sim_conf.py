@@ -34,11 +34,11 @@ class SimConf:
     pheremone_withdraw_quant: float = 0.01
 
     # Food Settings
-    max_basic_food_supply: float = 1.0
-    min_basic_food_supply: float = 0.1
+    max_basic_food_supply: float = 100.0
+    min_basic_food_supply: float = 10
 
     # item settings
-    withdraw_items_every: int = 100
+    withdraw_items_every: int = 500
     item_withdraw_quant: float = 0.01
 
     # Default map resolution

@@ -12,12 +12,13 @@ from src.sim.datatypes.maps import MapArray
 from src.sim.items.pheremones import AntLocationPheremone
 from src.sim.maps.environment_maps import AltitudeMap
 from src.sim.sim import AntHillSim
-
+from src.config.global_conf import gconf
 
 @attrs.define
 class Artist:
     # This should be a dict or something
-    images: List[pygame.Surface]
+    images: Dict[str, pygame.Surface]
+    num_frames_drawn: int = 0
 
     @classmethod
     def from_config(cls, pg_setup: PGSetup):
@@ -78,6 +79,8 @@ class Artist:
         # Update the display
         pygame.display.flip()
 
+        self.num_frames_drawn += 1
+
     def draw_entities(
         self, screen: pygame.Surface, entities: List[Entity], colour: Tuple = (0, 0, 0)
     ):
@@ -133,31 +136,37 @@ class Artist:
             None.
         """
 
-        # Create a 2D array with terrain colormap
-        terrain = plt.get_cmap(colormap)(np.linspace(0, 1, 256))[:, :3] * 255
-        terrain = terrain.astype(np.uint8)
+        colormap_name = "colormap_" + str(type(map))
 
-        values = map.normalised_values
+        # Always draw if the map doesn't yet exist
+        if colormap_name not in self.images.keys() or self.num_frames_drawn % gconf.update_colormap_image_every == 0:
+            # Create a 2D array with terrain colormap
+            terrain = plt.get_cmap(colormap)(np.linspace(0, 1, 256))[:, :3] * 255
+            terrain = terrain.astype(np.uint8)
 
-        # Convert the noise array to a 2D array of color indices
-        color_indices = (values * (len(terrain) - 1)).astype(np.int32)
+            values = map.normalised_values
 
-        # Create the terrain image using the color indices
-        terrain_image = terrain[color_indices]
+            # Convert the noise array to a 2D array of color indices
+            color_indices = (values * (len(terrain) - 1)).astype(np.int32)
 
-        # Convert the terrain image to a pygame surface
-        terrain_surface = pygame.surfarray.make_surface(terrain_image)
+            # Create the terrain image using the color indices
+            terrain_image = terrain[color_indices]
 
-        # Scale the terrain surface to fit the screen
-        # terrain_surface = pygame.transform.scale(terrain_surface, screen.get_size())
+            # Convert the terrain image to a pygame surface
+            terrain_surface = pygame.surfarray.make_surface(terrain_image)
 
-        if not show_zero:
-            terrain_surface.set_colorkey(terrain[0])
+            # Scale the terrain surface to fit the screen
+            # terrain_surface = pygame.transform.scale(terrain_surface, screen.get_size())
 
-        terrain_surface.set_alpha(alpha)
+            if not show_zero:
+                terrain_surface.set_colorkey(terrain[0])
+
+            terrain_surface.set_alpha(alpha)
+
+            self.images[colormap_name] = terrain_surface
 
         # Blit the terrain surface onto the screen
-        screen.blit(terrain_surface, (0, 0))
+        screen.blit(self.images[colormap_name], (0, 0))
 
     def draw_fps(self, screen: pygame.Surface, clock: pygame.time.Clock):
         font = pygame.font.Font("freesansbold.ttf", 18)

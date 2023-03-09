@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import Dict, List, Protocol, Type
 
 import attrs
+import numpy as np
 
 from src.config.sim_conf import sconf
 from src.sim.datatypes import entities, items, maps
@@ -129,9 +130,14 @@ class BasicAntHillSim(AntHillSim):
 
         # Withdraw items like food into ants
         if self.num_updates % sconf.withdraw_items_every:
+            # can we speed this up? We could provide the threshold in units of distance**2
+            # And then only compute the square of the distance maybe?
+            consumables_positions = np.array(
+                [consumable.pos.coords for consumable in self.sim_items]
+            )
             for entity in self.sim_entities:
                 entity.withdraw_from_consumables(
-                    consumables=self.sim_items, value=sconf.item_withdraw_quant
+                    consumables=self.sim_items, value=sconf.item_withdraw_quant, consumables_positions=consumables_positions
                 )
 
             # Update Entity Lists, track which ants have food.

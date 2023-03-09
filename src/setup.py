@@ -1,6 +1,6 @@
 import os
 import sys
-from typing import List
+from typing import Dict
 
 import attrs
 import pygame
@@ -15,7 +15,7 @@ class PGSetup:
 
     # Resources
     # This ought to be a dict or something.
-    images: List[pygame.Surface]
+    images: Dict[str, pygame.Surface]
 
     @classmethod
     def pygame_setup(cls, root_dir: str):
@@ -41,11 +41,11 @@ class PGSetup:
 
         # load the images from file
         # This doesn't really look great to be honest.
-        all_images = [
+        all_images = {image_file: 
             pygame.image.load(os.path.join(images_dir, image_file)).convert_alpha()
             for image_file in all_image_files
-        ]
-        all_images = [pygame.transform.scale(image, (20, 20)) for image in all_images]
+        }
+        all_images = {image_file: pygame.transform.scale(image, (20, 20)) for image_file, image in all_images.items()}
 
         return all_images
 
