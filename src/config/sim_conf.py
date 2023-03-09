@@ -23,12 +23,12 @@ class SimConf:
     # Settings for specific movement rules
     # Metropolis Monte-Carlo
     # *2 here for optimisation purposes
-    mmc_move_size: float = 1.0 * 2
-    mmc_move_temp: float = 0.03
+    mmc_move_size: float = 2.0 * 2
+    mmc_move_temp: float = 0.001
     mmc_max_attempts: int = 5
 
     # Pheremone Settings
-    init_found_food_pheremone_level: float = 10.0
+    init_found_food_pheremone_level: float = 1.0
     init_location_pheremone_level: float = 10.0
     withdraw_pheremones_every: int = 100
     pheremone_withdraw_quant: float = 0.01
@@ -57,7 +57,7 @@ class SimConf:
     perlin_num_octaves: int = 20
     perlin_persistence: float = 0.5  # 0.7
     perlin_lacunarity: float = 2.5
-    perlin_random_seed: int = 101
+    perlin_random_seed: int = 10
     perlin_scale_x: int = 3
     perlin_scale_y: int = perlin_scale_x
 

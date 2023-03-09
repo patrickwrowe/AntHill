@@ -78,14 +78,14 @@ class BasicAntHillSim(AntHillSim):
                     sim_maps[environment_maps.AltitudeMap],
                     sim_maps[pheremones.AntLocationPheremone],
                 ],
-                coefficients=(1, -1),
+                coefficients=(0, -2),
             ),
             "AltitudeFoundFood": meta_map.MetaMap.new_map(
                 sub_maps=[
                     sim_maps[environment_maps.AltitudeMap],
                     sim_maps[pheremones.FoundFoodPheremone],
                 ],
-                coefficients=(1, -1),
+                coefficients=(0, -2),
             ),
         }
 
@@ -128,7 +128,7 @@ class BasicAntHillSim(AntHillSim):
             )
             self.sim_maps[pheremones.FoundFoodPheremone].withdraw_from_entities(
                 self.entity_lists["ants_with_food"],
-                value=sconf.pheremone_withdraw_quant,
+                value=sconf.pheremone_withdraw_quant * 5,
             )
 
             # Experimental "diffusion"
