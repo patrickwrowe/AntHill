@@ -32,6 +32,7 @@ class SimConf:
     init_location_pheremone_level: float = 10.0
     withdraw_pheremones_every: int = 100
     pheremone_withdraw_quant: float = 0.01
+    pheremone_map_gauss_sigma: float = 1.0
 
     # Food Settings
     max_basic_food_supply: float = 100.0
@@ -59,6 +60,9 @@ class SimConf:
     perlin_random_seed: int = 101
     perlin_scale_x: int = 3
     perlin_scale_y: int = perlin_scale_x
+
+    # Smoothin' good for debugging
+    perlin_gauss_sigma: float = 1.0
 
     # Good for easy testing of moves - nice n' smooth.
     # perlin_num_octaves: int = 1

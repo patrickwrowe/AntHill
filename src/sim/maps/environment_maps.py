@@ -7,7 +7,7 @@ from noise import pnoise2
 
 from src.config.sim_conf import sconf
 from src.sim.datatypes import items, maps
-
+from scipy.ndimage.filters import gaussian_filter
 
 @attrs.define
 class TemperatureMap(maps.MapArray):
@@ -67,5 +67,7 @@ class AltitudeMap(maps.MapArray):
             # Basis. Use np.vectorize to get a version of the function which
             # lets you pass numpy arrays instead of sets of floats.
             noise_arr += np.vectorize(pnoise2)(scaled_y, scaled_x).T * octave_factor
+
+        noise_arr = gaussian_filter(noise_arr, sigma=sconf.perlin_gauss_sigma)
 
         return noise_arr

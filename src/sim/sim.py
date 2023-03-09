@@ -11,6 +11,7 @@ from src.sim.entities import ant
 from src.sim.items import food, pheremones
 from src.sim.maps import consumables_maps, environment_maps, meta_map
 from src.sim.rules import stochastic
+from scipy.ndimage.filters import gaussian_filter
 
 
 @attrs.define
@@ -128,6 +129,12 @@ class BasicAntHillSim(AntHillSim):
                 self.sim_entities, value=sconf.pheremone_withdraw_quant
             )
 
+            # Experimental "diffusion"
+            # If successful move to consumables map base class
+            self.sim_maps[pheremones.AntLocationPheremone].values = gaussian_filter(self.sim_maps[pheremones.AntLocationPheremone].values, sigma=sconf.pheremone_map_gauss_sigma)
+            self.sim_maps[pheremones.FoundFoodPheremone].values = gaussian_filter(self.sim_maps[pheremones.FoundFoodPheremone].values, sigma=sconf.pheremone_map_gauss_sigma)
+            
+
         # Withdraw items like food into ants
         if self.num_updates % sconf.withdraw_items_every:
             # can we speed this up? We could provide the threshold in units of distance**2
@@ -150,7 +157,7 @@ class BasicAntHillSim(AntHillSim):
                 entity
                 for entity in self.sim_entities
                 if not entity.has_consumable(food.BasicAntFood)
-            ]
+                ]
 
         # move the ants according to some physical laws.
         if sconf.brownian_motion == True:
