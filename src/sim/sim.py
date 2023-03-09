@@ -34,7 +34,6 @@ class AntHillSim(Protocol):
 
 @attrs.define
 class BasicAntHillSim(AntHillSim):
-
     entity_lists: Dict[str, List[entities.Entity]]
 
     @classmethod
@@ -88,8 +87,16 @@ class BasicAntHillSim(AntHillSim):
             ),
         }
 
-        entity_lists["ants_with_food"] = [entity for entity in sim_entities if entity.has_consumable(food.BasicAntFood)]
-        entity_lists["ants_without_food"] = [entity for entity in sim_entities if not entity.has_consumable(food.BasicAntFood)]
+        entity_lists["ants_with_food"] = [
+            entity
+            for entity in sim_entities
+            if entity.has_consumable(food.BasicAntFood)
+        ]
+        entity_lists["ants_without_food"] = [
+            entity
+            for entity in sim_entities
+            if not entity.has_consumable(food.BasicAntFood)
+        ]
 
         return cls(
             sim_entities=sim_entities,
@@ -125,10 +132,18 @@ class BasicAntHillSim(AntHillSim):
                 entity.withdraw_from_consumables(
                     consumables=self.sim_items, value=sconf.item_withdraw_quant
                 )
-            
+
             # Update Entity Lists
-            self.entity_lists["ants_with_food"] = [entity for entity in self.sim_entities if entity.has_consumable(food.BasicAntFood)]
-            self.entity_lists["ants_without_food"] = [entity for entity in self.sim_entities if not entity.has_consumable(food.BasicAntFood)]
+            self.entity_lists["ants_with_food"] = [
+                entity
+                for entity in self.sim_entities
+                if entity.has_consumable(food.BasicAntFood)
+            ]
+            self.entity_lists["ants_without_food"] = [
+                entity
+                for entity in self.sim_entities
+                if not entity.has_consumable(food.BasicAntFood)
+            ]
 
         # move the ants according to some physical laws.
         if sconf.brownian_motion == True:
