@@ -47,7 +47,9 @@ class Artist:
         screen.fill((255, 255, 255))
 
         # draw dat map
-        # self.draw_map(screen=screen, map=simulation.sim_maps[AltitudeMap])
+        self.draw_map(
+            screen=screen, map=simulation.sim_maps[AltitudeMap], show_zero=False
+        )
         self.draw_map(
             screen=screen,
             map=simulation.sim_maps[AntLocationPheremone],

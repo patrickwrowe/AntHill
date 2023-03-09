@@ -5,10 +5,12 @@ Ants exhibit complex behaviour, including constructing some of nature's finest p
 <img width="801" alt="Screenshot 2023-02-22 at 21 57 10" src="https://user-images.githubusercontent.com/103279917/220830987-4a56219d-e940-4810-adbf-f1d8f1ef7971.png">
 
 ToDo List:
-1. Allow ant pheremones to be deposited onto pheremone MapArray
-2. Compose multiple MapArrays into one array to be used as a potential in MMC algorithm
-3. Enable ants to withdraw/deposit food. -> Implement "home" or "storage cache" for depositing. 
-4. Set item-specific quantities to be withdrawn/deposited by default.
+- Enable ants to withdraw/deposit food. -> Implement "home" or "storage cache" for depositing. 
+- Set item-specific quantities to be withdrawn/deposited by default.
+- Update found food pheremones when food is withdrawn..
+- further tuning of parameters.
+- fix apparent bug where bugs (lol) seem to prefer moving vertically rather than horizontally?
+- add mask where potential == np.inf to block ants from getting wet.
 
 Nice To Have List:
 1. Enable printing of relevant information about tile/square by mouse click.
