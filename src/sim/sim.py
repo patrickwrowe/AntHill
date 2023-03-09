@@ -20,7 +20,7 @@ class AntHillSim(Protocol):
     sim_items: List[items.Item]
     sim_maps: Dict[Type[maps.MapArray], maps.MapArray]
     meta_maps: Dict[str, maps.MapArray]
-    num_updates: int = 0
+    num_updates: int
 
     @classmethod
     def new_sim(cls):
@@ -103,6 +103,7 @@ class BasicAntHillSim(AntHillSim):
             sim_items=sim_items,
             sim_maps=sim_maps,
             meta_maps=meta_maps,
+            num_updates=0,
             entity_lists=entity_lists,
         )
 
@@ -133,7 +134,7 @@ class BasicAntHillSim(AntHillSim):
                     consumables=self.sim_items, value=sconf.item_withdraw_quant
                 )
 
-            # Update Entity Lists
+            # Update Entity Lists, track which ants have food.
             self.entity_lists["ants_with_food"] = [
                 entity
                 for entity in self.sim_entities
@@ -150,10 +151,11 @@ class BasicAntHillSim(AntHillSim):
             stochastic.brownian_motion(self.sim_entities)
         if sconf.mmc_move == True:
             stochastic.metropolis_monte_carlo(
-                self.ants_without_food, self.meta_maps["AltitudeAntLocation"]
+                self.entity_lists["ants_without_food"],
+                self.meta_maps["AltitudeAntLocation"],
             )
             stochastic.metropolis_monte_carlo(
-                self.ants_with_food, self.meta_maps["AltitudeFoundFood"]
+                self.entity_lists["ants_with_food"], self.meta_maps["AltitudeFoundFood"]
             )
 
         return self
