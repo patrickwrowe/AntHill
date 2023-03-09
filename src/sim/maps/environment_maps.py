@@ -4,10 +4,11 @@ import attrs
 import matplotlib.pyplot as plt
 import numpy as np
 from noise import pnoise2
+from scipy.ndimage.filters import gaussian_filter
 
 from src.config.sim_conf import sconf
 from src.sim.datatypes import items, maps
-from scipy.ndimage.filters import gaussian_filter
+
 
 @attrs.define
 class TemperatureMap(maps.MapArray):

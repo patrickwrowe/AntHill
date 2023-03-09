@@ -11,7 +11,7 @@ class GlobalConfig:
     print_fps_every = 25
     draw_frame_every = 1
 
-    update_colormap_image_every = 100
+    update_colormap_image_every = 50
 
 
 gconf = GlobalConfig()

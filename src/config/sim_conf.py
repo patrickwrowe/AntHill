@@ -5,7 +5,7 @@ import attrs
 class SimConf:
     # Initial simulation settings.
     init_num_basic_ants: int = 1000
-    init_num_basic_food: int = 10
+    init_num_basic_food: int = 25
 
     # Simulation dimensions are not locked
     # To the screen dimensions.
@@ -28,7 +28,7 @@ class SimConf:
     mmc_max_attempts: int = 5
 
     # Pheremone Settings
-    init_found_food_pheremone_level: float = 0.0
+    init_found_food_pheremone_level: float = 10.0
     init_location_pheremone_level: float = 10.0
     withdraw_pheremones_every: int = 100
     pheremone_withdraw_quant: float = 0.01

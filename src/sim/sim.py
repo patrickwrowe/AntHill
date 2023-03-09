@@ -4,6 +4,7 @@ from typing import Dict, List, Protocol, Type
 
 import attrs
 import numpy as np
+from scipy.ndimage.filters import gaussian_filter
 
 from src.config.sim_conf import sconf
 from src.sim.datatypes import entities, items, maps
@@ -11,7 +12,6 @@ from src.sim.entities import ant
 from src.sim.items import food, pheremones
 from src.sim.maps import consumables_maps, environment_maps, meta_map
 from src.sim.rules import stochastic
-from scipy.ndimage.filters import gaussian_filter
 
 
 @attrs.define
@@ -78,14 +78,14 @@ class BasicAntHillSim(AntHillSim):
                     sim_maps[environment_maps.AltitudeMap],
                     sim_maps[pheremones.AntLocationPheremone],
                 ],
-                coefficients=(1, 1),
+                coefficients=(1, -1),
             ),
             "AltitudeFoundFood": meta_map.MetaMap.new_map(
                 sub_maps=[
                     sim_maps[environment_maps.AltitudeMap],
                     sim_maps[pheremones.FoundFoodPheremone],
                 ],
-                coefficients=(1, 1),
+                coefficients=(1, -1),
             ),
         }
 
@@ -123,17 +123,24 @@ class BasicAntHillSim(AntHillSim):
         # if necessary, withdraw pheremones from ants
         if self.num_updates % sconf.withdraw_pheremones_every == 0:
             self.sim_maps[pheremones.AntLocationPheremone].withdraw_from_entities(
-                self.sim_entities, value=sconf.pheremone_withdraw_quant
+                self.entity_lists["ants_without_food"],
+                value=sconf.pheremone_withdraw_quant,
             )
             self.sim_maps[pheremones.FoundFoodPheremone].withdraw_from_entities(
-                self.sim_entities, value=sconf.pheremone_withdraw_quant
+                self.entity_lists["ants_with_food"],
+                value=sconf.pheremone_withdraw_quant,
             )
 
             # Experimental "diffusion"
             # If successful move to consumables map base class
-            self.sim_maps[pheremones.AntLocationPheremone].values = gaussian_filter(self.sim_maps[pheremones.AntLocationPheremone].values, sigma=sconf.pheremone_map_gauss_sigma)
-            self.sim_maps[pheremones.FoundFoodPheremone].values = gaussian_filter(self.sim_maps[pheremones.FoundFoodPheremone].values, sigma=sconf.pheremone_map_gauss_sigma)
-            
+            self.sim_maps[pheremones.AntLocationPheremone].values = gaussian_filter(
+                self.sim_maps[pheremones.AntLocationPheremone].values,
+                sigma=sconf.pheremone_map_gauss_sigma,
+            )
+            self.sim_maps[pheremones.FoundFoodPheremone].values = gaussian_filter(
+                self.sim_maps[pheremones.FoundFoodPheremone].values,
+                sigma=sconf.pheremone_map_gauss_sigma,
+            )
 
         # Withdraw items like food into ants
         if self.num_updates % sconf.withdraw_items_every:
@@ -144,7 +151,9 @@ class BasicAntHillSim(AntHillSim):
             )
             for entity in self.sim_entities:
                 entity.withdraw_from_consumables(
-                    consumables=self.sim_items, value=sconf.item_withdraw_quant, consumables_positions=consumables_positions
+                    consumables=self.sim_items,
+                    value=sconf.item_withdraw_quant,
+                    consumables_positions=consumables_positions,
                 )
 
             # Update Entity Lists, track which ants have food.
@@ -157,7 +166,7 @@ class BasicAntHillSim(AntHillSim):
                 entity
                 for entity in self.sim_entities
                 if not entity.has_consumable(food.BasicAntFood)
-                ]
+            ]
 
         # move the ants according to some physical laws.
         if sconf.brownian_motion == True:
@@ -165,10 +174,11 @@ class BasicAntHillSim(AntHillSim):
         if sconf.mmc_move == True:
             stochastic.metropolis_monte_carlo(
                 self.entity_lists["ants_without_food"],
-                self.meta_maps["AltitudeAntLocation"],
+                self.meta_maps["AltitudeFoundFood"],
             )
             stochastic.metropolis_monte_carlo(
-                self.entity_lists["ants_with_food"], self.meta_maps["AltitudeFoundFood"]
+                self.entity_lists["ants_with_food"],
+                self.meta_maps["AltitudeAntLocation"],
             )
 
         return self

@@ -41,11 +41,16 @@ class PGSetup:
 
         # load the images from file
         # This doesn't really look great to be honest.
-        all_images = {image_file: 
-            pygame.image.load(os.path.join(images_dir, image_file)).convert_alpha()
+        all_images = {
+            image_file: pygame.image.load(
+                os.path.join(images_dir, image_file)
+            ).convert_alpha()
             for image_file in all_image_files
         }
-        all_images = {image_file: pygame.transform.scale(image, (20, 20)) for image_file, image in all_images.items()}
+        all_images = {
+            image_file: pygame.transform.scale(image, (20, 20))
+            for image_file, image in all_images.items()
+        }
 
         return all_images
 

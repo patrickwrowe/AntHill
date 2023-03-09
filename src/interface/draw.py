@@ -5,14 +5,15 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pygame
 
+from src.config.global_conf import gconf
 from src.setup import PGSetup
 from src.sim.datatypes.entities import Entity
 from src.sim.datatypes.items import Item
 from src.sim.datatypes.maps import MapArray
-from src.sim.items.pheremones import AntLocationPheremone
+from src.sim.items.pheremones import AntLocationPheremone, FoundFoodPheremone
 from src.sim.maps.environment_maps import AltitudeMap
 from src.sim.sim import AntHillSim
-from src.config.global_conf import gconf
+
 
 @attrs.define
 class Artist:
@@ -53,6 +54,15 @@ class Artist:
             colormap="autumn",
             show_zero=False,
             alpha=100,
+            name="location",
+        )
+        self.draw_map(
+            screen=screen,
+            map=simulation.sim_maps[FoundFoodPheremone],
+            colormap="winter",
+            show_zero=False,
+            alpha=100,
+            name="foundfood",
         )
 
         # self.draw_map(screen=screen, map=simulation.meta_maps["AltitudeAntLocation"], colormap='autumn')
@@ -64,7 +74,7 @@ class Artist:
         self.draw_entities(
             screen=screen,
             entities=simulation.entity_lists["ants_with_food"],
-            colour=(255, 0, 0),
+            colour=(15, 0, 255),
         )
         self.draw_entities(
             screen=screen,
@@ -121,6 +131,7 @@ class Artist:
         colormap: str = "terrain",
         show_zero: bool = True,
         alpha: int = None,
+        name: str = "map",
     ) -> None:
         """
         This function takes a Pygame screen and a MapArray object, and
@@ -136,10 +147,13 @@ class Artist:
             None.
         """
 
-        colormap_name = "colormap_" + str(type(map))
+        colormap_name = "colormap_" + name
 
         # Always draw if the map doesn't yet exist
-        if colormap_name not in self.images.keys() or self.num_frames_drawn % gconf.update_colormap_image_every == 0:
+        if (
+            colormap_name not in self.images.keys()
+            or self.num_frames_drawn % gconf.update_colormap_image_every == 0
+        ):
             # Create a 2D array with terrain colormap
             terrain = plt.get_cmap(colormap)(np.linspace(0, 1, 256))[:, :3] * 255
             terrain = terrain.astype(np.uint8)
