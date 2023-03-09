@@ -50,3 +50,12 @@ class Entity:
                 # withdraw a set amount to the correct type of consumable
                 quant = consumable.withdraw(value)
                 self.consumables[type(consumable)].deposit(quant)
+
+    def has_consumable(self, consumable: Type[items.Consumable]):
+        """Returns true of the specific consumable type supply
+        is greater than 0."""
+
+        if self.consumables[consumable].supply > 0.0:
+            return True
+        else:
+            return False

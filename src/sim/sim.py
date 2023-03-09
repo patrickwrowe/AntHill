@@ -34,6 +34,9 @@ class AntHillSim(Protocol):
 
 @attrs.define
 class BasicAntHillSim(AntHillSim):
+
+    entity_lists: Dict[str, List[entities.Entity]]
+
     @classmethod
     def new_sim(cls):
         """Initialise a new simulation"""
@@ -41,6 +44,7 @@ class BasicAntHillSim(AntHillSim):
         sim_entities = []
         sim_items = []
         sim_maps = {}
+        entity_lists = {}
 
         # Initialise some ants.
         sim_entities.extend(
@@ -84,11 +88,15 @@ class BasicAntHillSim(AntHillSim):
             ),
         }
 
+        entity_lists["ants_with_food"] = [entity for entity in sim_entities if entity.has_consumable(food.BasicAntFood)]
+        entity_lists["ants_without_food"] = [entity for entity in sim_entities if not entity.has_consumable(food.BasicAntFood)]
+
         return cls(
             sim_entities=sim_entities,
             sim_items=sim_items,
             sim_maps=sim_maps,
             meta_maps=meta_maps,
+            entity_lists=entity_lists,
         )
 
     def update_sim(self) -> BasicAntHillSim:
@@ -117,13 +125,20 @@ class BasicAntHillSim(AntHillSim):
                 entity.withdraw_from_consumables(
                     consumables=self.sim_items, value=sconf.item_withdraw_quant
                 )
+            
+            # Update Entity Lists
+            self.entity_lists["ants_with_food"] = [entity for entity in self.sim_entities if entity.has_consumable(food.BasicAntFood)]
+            self.entity_lists["ants_without_food"] = [entity for entity in self.sim_entities if not entity.has_consumable(food.BasicAntFood)]
 
         # move the ants according to some physical laws.
         if sconf.brownian_motion == True:
             stochastic.brownian_motion(self.sim_entities)
         if sconf.mmc_move == True:
             stochastic.metropolis_monte_carlo(
-                self.sim_entities, self.meta_maps["AltitudeAntLocation"]
+                self.ants_without_food, self.meta_maps["AltitudeAntLocation"]
+            )
+            stochastic.metropolis_monte_carlo(
+                self.ants_with_food, self.meta_maps["AltitudeFoundFood"]
             )
 
         return self
