@@ -1,4 +1,4 @@
-from typing import Dict, List, Type
+from typing import Dict, List, Tuple
 
 import attrs
 import matplotlib.pyplot as plt
@@ -60,7 +60,16 @@ class Artist:
         self.draw_items(screen=screen, items=simulation.sim_items)
 
         # Draw dem ants
-        self.draw_entities(screen=screen, entities=simulation.sim_entities)
+        self.draw_entities(
+            screen=screen,
+            entities=simulation.entity_lists["ants_with_food"],
+            colour=(255, 0, 0),
+        )
+        self.draw_entities(
+            screen=screen,
+            entities=simulation.entity_lists["ants_without_food"],
+            colour=(0, 0, 0),
+        )
 
         # Draw fps
         # Disabled as text doesn't seem to work...
@@ -69,7 +78,9 @@ class Artist:
         # Update the display
         pygame.display.flip()
 
-    def draw_entities(self, screen: pygame.Surface, entities: List[Entity]):
+    def draw_entities(
+        self, screen: pygame.Surface, entities: List[Entity], colour: Tuple = (0, 0, 0)
+    ):
         """
         Draw a list of entities on the given Pygame screen.
 
@@ -82,7 +93,7 @@ class Artist:
         """
 
         for entity in entities:
-            pygame.draw.circle(screen, (0, 0, 0), entity.pos.coords, radius=1)
+            pygame.draw.circle(screen, colour, entity.pos.coords, radius=1)
             # screen.blit(self.images[0], np.array(entity.pos.coords) - [10, 10])
 
     def draw_items(self, screen: pygame.Surface, items: List[Item]):
