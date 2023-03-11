@@ -61,10 +61,16 @@ class AntHill:
             if main_ticks % gconf.print_fps_every == 0:
                 print(f"## Info: Step: {main_ticks} ##")
                 print(f"FPS: {self.pg_setup.clock.get_fps()}")
-                print(f"Ants with food: {len(simulation.entity_lists['ants_with_food'])}")
-                print(f"Ants without food: {len(simulation.entity_lists['ants_without_food'])}")
+                print(
+                    f"Ants with food: {len(simulation.entity_lists['ants_with_food'])}"
+                )
+                print(
+                    f"Ants without food: {len(simulation.entity_lists['ants_without_food'])}"
+                )
                 print(f"Drain/Cache food level: {simulation.sim_drain.supply}")
-                print(f"Food Collection Rate: {simulation.sim_drain.supply / main_ticks}")
+                print(
+                    f"Food Collection Rate: {simulation.sim_drain.supply / (main_ticks + 1)}"
+                )
                 print("\n")
 
             if main_ticks % gconf.draw_frame_every == 0:

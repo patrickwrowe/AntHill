@@ -85,14 +85,14 @@ class BasicAntHillSim(AntHillSim):
                     sim_maps[environment_maps.AltitudeMap],
                     sim_maps[pheremones.AntLocationPheremone],
                 ],
-                coefficients=(0.1, -2),
+                coefficients=(0.0, -2),
             ),
             "AltitudeFoundFood": meta_map.MetaMap.new_map(
                 sub_maps=[
                     sim_maps[environment_maps.AltitudeMap],
                     sim_maps[pheremones.FoundFoodPheremone],
                 ],
-                coefficients=(0.1, -2),
+                coefficients=(0.0, -2),
             ),
         }
 

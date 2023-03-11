@@ -17,7 +17,12 @@ def brownian_motion(sim_entities: List[entities.Entity]) -> None:
     except for the boundaries of the known universe."""
 
     for entity in sim_entities:
-        entity.pos.update_pos((np.random.uniform(-1, 1), np.random.uniform(-1, 1)))
+        entity.pos.update_pos(
+            (
+                np.random.uniform(-sconf.mmc_move_size, sconf.mmc_move_size),
+                np.random.uniform(-sconf.mmc_move_size, sconf.mmc_move_size),
+            )
+        )
 
 
 def metropolis_monte_carlo(
