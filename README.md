@@ -2,7 +2,7 @@ AntHill.
 
 Ants exhibit complex behaviour, including constructing some of nature's finest palaces, without any direct oversight, direction or individual intelligence. They achieve all of this through hive behaviour controlled by only a few signals. This project aims to replicate this behaviour for a hive of ant-like entities.
 
-![Uploading Screenshot 2023-03-08 at 23.07.24.png…]()
+<img width="802" alt="Screenshot 2023-03-08 at 23 07 24" src="https://user-images.githubusercontent.com/103279917/223946869-64970c2f-28ff-4f9a-9c99-895a71ab342e.png">
 
 ToDo List:
 - Enable ants to withdraw/deposit food. -> Implement "home" or "storage cache" for depositing. 
