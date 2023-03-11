@@ -46,7 +46,7 @@ class Entity:
                 # withdraw a set amount to the correct type of consumable
                 quant = consumable.withdraw(value)
                 self.consumables[type(consumable)].deposit(quant)
-    
+
     def deposit_to_consumables(
         self,
         consumables: List[items.Consumable],

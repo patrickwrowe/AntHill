@@ -7,7 +7,7 @@ import numpy as np
 from scipy.ndimage.filters import gaussian_filter
 
 from src.config.sim_conf import sconf
-from src.sim.datatypes import entities, items, maps, SimPos
+from src.sim.datatypes import SimPos, entities, items, maps
 from src.sim.entities import ant
 from src.sim.items import food, pheremones
 from src.sim.maps import consumables_maps, environment_maps, meta_map
@@ -59,7 +59,9 @@ class BasicAntHillSim(AntHillSim):
             [food.BasicAntFood.new_food() for i in range(sconf.init_num_basic_food)]
         )
 
-        sim_drain = food.BasicAntFood(pos=SimPos(sconf.sim_x/2, sconf.sim_y/2), supply=0)
+        sim_drain = food.BasicAntFood(
+            pos=SimPos(sconf.sim_x / 2, sconf.sim_y / 2), supply=0
+        )
 
         # Initialise some maps
         sim_maps[
@@ -161,14 +163,14 @@ class BasicAntHillSim(AntHillSim):
                     value=sconf.item_withdraw_quant,
                     consumables_positions=consumables_positions,
                 )
-            
+
             # deposit food to cache if necessary
             for entity in self.sim_entities:
                 entity.deposit_to_consumables(
                     consumables=[self.sim_drain],
-                    value=1e5,   # deposit all food no matter what
+                    value=1e5,  # deposit all food no matter what
                     consumables_positions=np.array([self.sim_drain.pos.coords]),
-                    min_dist=sconf.item_collect_dist * sconf.drain_item_scale_mod
+                    min_dist=sconf.item_collect_dist * sconf.drain_item_scale_mod,
                 )
 
             # Update Entity Lists, track which ants have food.

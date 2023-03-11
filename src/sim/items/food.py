@@ -9,7 +9,6 @@ from src.sim.datatypes import SimPos, items
 
 @attrs.define
 class Food(items.Consumable):
-
     @classmethod
     def new_food(cls):
         raise NotImplementedError
@@ -17,7 +16,6 @@ class Food(items.Consumable):
 
 @attrs.define
 class BasicAntFood(Food):
-
     @classmethod
     def new_food(cls):
         """Generates a food item with a random value
@@ -35,4 +33,3 @@ class BasicAntFood(Food):
         )
 
         return cls(pos=init_pos, supply=supply)
-    
