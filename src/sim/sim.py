@@ -85,14 +85,14 @@ class BasicAntHillSim(AntHillSim):
                     sim_maps[environment_maps.AltitudeMap],
                     sim_maps[pheremones.AntLocationPheremone],
                 ],
-                coefficients=(0.5, -2),
+                coefficients=(0.1, -2),
             ),
             "AltitudeFoundFood": meta_map.MetaMap.new_map(
                 sub_maps=[
                     sim_maps[environment_maps.AltitudeMap],
                     sim_maps[pheremones.FoundFoodPheremone],
                 ],
-                coefficients=(0.5, -2),
+                coefficients=(0.1, -2),
             ),
         }
 
@@ -149,6 +149,10 @@ class BasicAntHillSim(AntHillSim):
                 self.sim_maps[pheremones.FoundFoodPheremone].values,
                 sigma=sconf.pheremone_map_gauss_sigma,
             )
+
+            # Experimental" "decay"
+            self.sim_maps[pheremones.AntLocationPheremone].values *= 0.9
+            self.sim_maps[pheremones.FoundFoodPheremone].values *= 0.9
 
         # Withdraw items like food into ants
         if self.num_updates % sconf.withdraw_items_every:
