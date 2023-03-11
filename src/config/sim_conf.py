@@ -24,7 +24,7 @@ class SimConf:
     # Metropolis Monte-Carlo
     # *2 here for optimisation purposes
     mmc_move_size: float = 2.0 * 2
-    mmc_move_temp: float = 0.001
+    mmc_move_temp: float = 0.003
     mmc_max_attempts: int = 5
 
     # Pheremone Settings
@@ -57,7 +57,7 @@ class SimConf:
     perlin_num_octaves: int = 20
     perlin_persistence: float = 0.5  # 0.7
     perlin_lacunarity: float = 2.5
-    perlin_random_seed: int = 100
+    perlin_random_seed: int = 3
     perlin_scale_x: int = 3
     perlin_scale_y: int = perlin_scale_x
 
