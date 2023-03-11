@@ -64,6 +64,8 @@ class AntHill:
                 print(f"Ants with food: {len(simulation.entity_lists['ants_with_food'])}")
                 print(f"Ants without food: {len(simulation.entity_lists['ants_without_food'])}")
                 print(f"Drain/Cache food level: {simulation.sim_drain.supply}")
+                print(f"Food Collection Rate: {simulation.sim_drain.supply / main_ticks}")
+                print("\n")
 
             if main_ticks % gconf.draw_frame_every == 0:
                 self.artist.draw_frame(
