@@ -18,11 +18,14 @@ from src.sim.rules import stochastic
 class AntHillSim(Protocol):
     """Main class for handling anthill simulation"""
 
+    # todo, these need to be dics for each type so they
+    # can be sublists for which different procedures will be performed.
     sim_entities: List[entities.Entity]
     sim_items: List[items.Item]
     sim_maps: Dict[Type[maps.MapArray], maps.MapArray]
     meta_maps: Dict[str, maps.MapArray]
     num_updates: int
+    sim_drain: items.Consumable
 
     @classmethod
     def new_sim(cls):
@@ -37,7 +40,6 @@ class AntHillSim(Protocol):
 @attrs.define
 class BasicAntHillSim(AntHillSim):
     entity_lists: Dict[str, List[entities.Entity]]
-    sim_drain: items.Consumable
 
     @classmethod
     def new_sim(cls):
@@ -57,7 +59,7 @@ class BasicAntHillSim(AntHillSim):
             [food.BasicAntFood.new_food() for i in range(sconf.init_num_basic_food)]
         )
 
-        sim_drain = food.BasicAntFood(pos=SimPos(0, 0), supply=0)
+        sim_drain = food.BasicAntFood(pos=SimPos(sconf.sim_x/2, sconf.sim_y/2), supply=0)
 
         # Initialise some maps
         sim_maps[
@@ -132,7 +134,7 @@ class BasicAntHillSim(AntHillSim):
             )
             self.sim_maps[pheremones.FoundFoodPheremone].withdraw_from_entities(
                 self.entity_lists["ants_with_food"],
-                value=sconf.pheremone_withdraw_quant * 5,
+                value=sconf.pheremone_withdraw_quant * 2,
             )
 
             # Experimental "diffusion"
@@ -165,7 +167,8 @@ class BasicAntHillSim(AntHillSim):
                 entity.deposit_to_consumables(
                     consumables=[self.sim_drain],
                     value=1e5,   # deposit all food no matter what
-                    consumables_positions=np.array([self.sim_drain.pos.coords])
+                    consumables_positions=np.array([self.sim_drain.pos.coords]),
+                    min_dist=sconf.item_collect_dist * sconf.drain_item_scale_mod
                 )
 
             # Update Entity Lists, track which ants have food.

@@ -6,6 +6,7 @@ import numpy as np
 import pygame
 
 from src.config.global_conf import gconf
+from src.config.sim_conf import sconf
 from src.setup import PGSetup
 from src.sim.datatypes.entities import Entity
 from src.sim.datatypes.items import Item
@@ -70,7 +71,8 @@ class Artist:
         # self.draw_map(screen=screen, map=simulation.meta_maps["AltitudeAntLocation"], colormap='autumn')
 
         # Draw items
-        self.draw_items(screen=screen, items=simulation.sim_items)
+        self.draw_items(screen=screen, items=simulation.sim_items, colour=(200, 50, 0), radius=sconf.item_collect_dist)
+        self.draw_items(screen=screen, items=[simulation.sim_drain], colour=(100, 50, 150), radius=sconf.item_collect_dist * sconf.drain_item_scale_mod)
 
         # Draw dem ants
         self.draw_entities(
@@ -111,7 +113,7 @@ class Artist:
             pygame.draw.circle(screen, colour, entity.pos.coords, radius=1)
             # screen.blit(self.images[0], np.array(entity.pos.coords) - [10, 10])
 
-    def draw_items(self, screen: pygame.Surface, items: List[Item]):
+    def draw_items(self, screen: pygame.Surface, items: List[Item], colour: Tuple = (0, 0, 0), radius=3):
         """
         Draw a list of entities on the given Pygame screen.
 
@@ -124,7 +126,7 @@ class Artist:
         """
 
         for item in items:
-            pygame.draw.circle(screen, (200, 50, 0), item.pos.coords, radius=3)
+            pygame.draw.circle(screen, colour, item.pos.coords, radius=radius)
 
     def draw_map(
         self,
