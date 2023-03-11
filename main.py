@@ -38,14 +38,6 @@ class AntHill:
         # Main loop
         running = True
         while running:
-            # print the fps
-            if main_ticks % gconf.print_fps_every == 0:
-                print(f"## Info: Step: {main_ticks} ##")
-                print(f"FPS: {self.pg_setup.clock.get_fps()}")
-                print(f"Ants with food: {len(simulation.entity_lists['ants_with_food'])}")
-                print(f"Ants without food: {len(simulation.entity_lists['ants_without_food'])}")
-                print(f"Drain/Cache food level: {simulation.sim_drain.supply}")
-
             # Get a tuple of AntHillEvents to begin the loop
             # These deal exclusively with user input
             ah_events = self.event_handler.handle_events()
@@ -64,6 +56,14 @@ class AntHill:
 
             # Update game state
             simulation = self.simulation.update_sim()
+
+            # print the fps
+            if main_ticks % gconf.print_fps_every == 0:
+                print(f"## Info: Step: {main_ticks} ##")
+                print(f"FPS: {self.pg_setup.clock.get_fps()}")
+                print(f"Ants with food: {len(simulation.entity_lists['ants_with_food'])}")
+                print(f"Ants without food: {len(simulation.entity_lists['ants_without_food'])}")
+                print(f"Drain/Cache food level: {simulation.sim_drain.supply}")
 
             if main_ticks % gconf.draw_frame_every == 0:
                 self.artist.draw_frame(

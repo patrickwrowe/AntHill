@@ -25,7 +25,7 @@ class SimConf:
     # Metropolis Monte-Carlo
     # *2 here for optimisation purposes
     mmc_move_size: float = 2.0 * 2
-    mmc_move_temp: float = 0.003
+    mmc_move_temp: float = 0.005
     mmc_max_attempts: int = 5
 
     # Pheremone Settings
