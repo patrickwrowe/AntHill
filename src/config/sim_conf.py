@@ -20,11 +20,14 @@ class SimConf:
     # Updating the simulation state
     brownian_motion: bool = False
     mmc_move: bool = True
+    inertial_mmc_move: bool = False
 
     # Settings for specific movement rules
     # Metropolis Monte-Carlo
     # *2 here for optimisation purposes
     mmc_move_size: float = 2.0 * 2
+    inertial_mmc_move_size: float = 0.7
+    inertial_mass: float = 1.0
     mmc_move_temp: float = 0.005
     mmc_max_attempts: int = 5
 

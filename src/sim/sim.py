@@ -190,14 +190,23 @@ class BasicAntHillSim(AntHillSim):
             ]
 
         # move the ants according to some physical laws.
-        if sconf.brownian_motion == True:
+        if sconf.brownian_motion:
             stochastic.brownian_motion(self.sim_entities)
-        if sconf.mmc_move == True:
+        if sconf.mmc_move:
             stochastic.metropolis_monte_carlo(
                 self.entity_lists["ants_without_food"],
                 self.meta_maps["AltitudeFoundFood"],
             )
             stochastic.metropolis_monte_carlo(
+                self.entity_lists["ants_with_food"],
+                self.meta_maps["AltitudeAntLocation"],
+            )
+        if sconf.inertial_mmc_move:
+            stochastic.inertial_metropolis_monte_carlo(
+                self.entity_lists["ants_without_food"],
+                self.meta_maps["AltitudeFoundFood"],
+            )
+            stochastic.inertial_metropolis_monte_carlo(
                 self.entity_lists["ants_with_food"],
                 self.meta_maps["AltitudeAntLocation"],
             )
