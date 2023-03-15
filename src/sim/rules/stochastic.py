@@ -50,6 +50,7 @@ def metropolis_monte_carlo(
             if accepted:
                 entity.pos.update_pos(move)
 
+
 def metropolis_move(
     potential: maps.MapArray,
     pos: SimPos,
@@ -92,6 +93,7 @@ def metropolis_move(
     accepted = mmc_accept(delta_energy=delta_energy, temperature=temperature)
 
     return move, accepted
+
 
 @numba.jit
 def mmc_accept(delta_energy: float, temperature: float) -> bool:
