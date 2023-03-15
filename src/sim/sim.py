@@ -201,14 +201,5 @@ class BasicAntHillSim(AntHillSim):
                 self.entity_lists["ants_with_food"],
                 self.meta_maps["AltitudeAntLocation"],
             )
-        if sconf.inertial_mmc_move:
-            stochastic.inertial_metropolis_monte_carlo(
-                self.entity_lists["ants_without_food"],
-                self.meta_maps["AltitudeFoundFood"],
-            )
-            stochastic.inertial_metropolis_monte_carlo(
-                self.entity_lists["ants_with_food"],
-                self.meta_maps["AltitudeAntLocation"],
-            )
 
         return self
