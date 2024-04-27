@@ -1,6 +1,8 @@
 AntHill.
 
-Ants exhibit complex behaviour, including constructing some of nature's finest palaces, without any direct oversight, direction or individual intelligence. They achieve all of this through hive behaviour controlled by only a few signals. This project aims to replicate this behaviour for a hive of ant-like entities.
+Toying around with using PyGame/MatPlotLib as a live visualisation for Monte-Carlo simulations. Making an attempt to simulate the behaviour of ants using "fields" representing ant pheremones, topology, etc, which impact the probability of a Monte-Carlo move being accepted. 
+
+Just a weekend project - and no longer being worked on.
 
 Notes:
 Food collection rate with random motion something like 1e-5
@@ -17,4 +19,4 @@ ToDo List:
 
 Nice To Have List:
 1. Enable printing of relevant information about tile/square by mouse click.
-2. Somehow fix PyGame now allowing text to be printed on screen (!?)
+
